@@ -6,9 +6,10 @@
   "typings": "js/etude",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build:compile && npm run build:run",
+    "build": "npm run build:compile && npm run build:run && npm run build:doc",
     "build:compile": "tsc",
-    "build:run": "node js/etude.js"
+    "build:run": "node js/etude.js",
+    "build:doc": "typedoc --out doc ts"
   },
   "repository": {
     "type": "git",
