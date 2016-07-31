@@ -5,7 +5,10 @@
   "main": "js/etude.js",
   "typings": "js/etude",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build:compile && npm run build:run",
+    "build:compile": "tsc",
+    "build:run": "node js/etude.js"
   },
   "repository": {
     "type": "git",
