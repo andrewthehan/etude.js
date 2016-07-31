@@ -1,0 +1,24 @@
+{
+  "name": "etude",
+  "version": "0.0.0",
+  "description": "JavaScript Music Theory API",
+  "main": "js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewthehan/etude.js.git"
+  },
+  "keywords": [
+    "etude",
+    "music",
+    "theory"
+  ],
+  "author": "Andrew Han",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrewthehan/etude.js/issues"
+  },
+  "homepage": "https://github.com/andrewthehan/etude.js#readme"
+}
