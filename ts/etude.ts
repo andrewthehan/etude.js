@@ -95,7 +95,7 @@ export module Etude {
 			return this.name;
 		}
 	}
-	
+
 	export module Util {
 		export function rotate(array, distance) {
 			while (distance-- > 0) {

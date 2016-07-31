@@ -2,7 +2,7 @@
   "name": "etude",
   "version": "0.0.0-alpha.3",
   "description": "JavaScript Music Theory API",
-  "main": "js/etude.ts",
+  "main": "js/etude.js",
   "typings": "js/etude",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
