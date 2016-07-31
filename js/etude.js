@@ -1,8 +1,8 @@
 "use strict";
 var Etude;
 (function (Etude) {
-    var Accidental = (function () {
-        function Accidental(symbol, offset) {
+    class Accidental {
+        constructor(symbol, offset) {
             this.symbol = symbol;
             this.offset = offset;
             if (Accidental.size === 8 || Accidental._values.length === 8) {
@@ -11,7 +11,7 @@ var Etude;
             ++Accidental.size;
             Accidental._values.push(this);
         }
-        Accidental.fromOffset = function (offset) {
+        static fromOffset(offset) {
             switch (offset) {
                 case -3: return Accidental.TRIPLE_FLAT;
                 case -2: return Accidental.DOUBLE_FLAT;
@@ -22,8 +22,8 @@ var Etude;
                 case 3: return Accidental.TRIPLE_SHARP;
                 default: throw new Error("Invalid accidental offset: " + offset);
             }
-        };
-        Accidental.fromString = function (accidentalString) {
+        }
+        static fromString(accidentalString) {
             switch (accidentalString) {
                 case "bbb": return Accidental.TRIPLE_FLAT;
                 case "bb": return Accidental.DOUBLE_FLAT;
@@ -35,34 +35,30 @@ var Etude;
                 case "#x": return Accidental.TRIPLE_SHARP;
                 default: throw new Error("Invalid accidental string: " + accidentalString);
             }
-        };
-        Accidental.values = function () {
-            return Accidental._values.slice();
-        };
-        Accidental.prototype.toString = function () {
-            return this.symbol;
-        };
-        Accidental.size = 0;
-        Accidental._values = [];
-        Accidental.TRIPLE_FLAT = new Accidental("bbb", -3);
-        Accidental.DOUBLE_FLAT = new Accidental("bb", -2);
-        Accidental.FLAT = new Accidental("b", -1);
-        Accidental.NONE = new Accidental("", 0);
-        Accidental.NATURAL = new Accidental("n", 0);
-        Accidental.SHARP = new Accidental("#", 1);
-        Accidental.DOUBLE_SHARP = new Accidental("x", 2);
-        Accidental.TRIPLE_SHARP = new Accidental("#x", 3);
-        return Accidental;
-    }());
-    Etude.Accidental = Accidental;
-    var Key = (function () {
-        function Key() {
         }
-        return Key;
-    }());
+        static values() {
+            return Accidental._values.slice();
+        }
+        toString() {
+            return this.symbol;
+        }
+    }
+    Accidental.size = 0;
+    Accidental._values = [];
+    Accidental.TRIPLE_FLAT = new Accidental("bbb", -3);
+    Accidental.DOUBLE_FLAT = new Accidental("bb", -2);
+    Accidental.FLAT = new Accidental("b", -1);
+    Accidental.NONE = new Accidental("", 0);
+    Accidental.NATURAL = new Accidental("n", 0);
+    Accidental.SHARP = new Accidental("#", 1);
+    Accidental.DOUBLE_SHARP = new Accidental("x", 2);
+    Accidental.TRIPLE_SHARP = new Accidental("#x", 3);
+    Etude.Accidental = Accidental;
+    class Key {
+    }
     Etude.Key = Key;
-    var Letter = (function () {
-        function Letter(name, offset) {
+    class Letter {
+        constructor(name, offset) {
             this.name = name;
             this.offset = offset;
             if (Letter.size === 7 || Letter._values.length === 7) {
@@ -71,29 +67,27 @@ var Etude;
             ++Letter.size;
             Letter._values.push(this);
         }
-        Letter.values = function (startingLetter) {
-            if (startingLetter === void 0) { startingLetter = Letter.A; }
-            var letters = Letter._values.slice();
+        static values(startingLetter = Letter.A) {
+            let letters = Letter._values.slice();
             Util.rotate(letters, startingLetter.ordinal());
             return letters;
-        };
-        Letter.prototype.ordinal = function () {
+        }
+        ordinal() {
             return this.name.charCodeAt(0) - "A".charCodeAt(0);
-        };
-        Letter.prototype.toString = function () {
+        }
+        toString() {
             return this.name;
-        };
-        Letter.size = 0;
-        Letter._values = [];
-        Letter.A = new Letter("A", 9);
-        Letter.B = new Letter("B", 11);
-        Letter.C = new Letter("C", 0);
-        Letter.D = new Letter("D", 2);
-        Letter.E = new Letter("E", 4);
-        Letter.F = new Letter("F", 5);
-        Letter.G = new Letter("G", 7);
-        return Letter;
-    }());
+        }
+    }
+    Letter.size = 0;
+    Letter._values = [];
+    Letter.A = new Letter("A", 9);
+    Letter.B = new Letter("B", 11);
+    Letter.C = new Letter("C", 0);
+    Letter.D = new Letter("D", 2);
+    Letter.E = new Letter("E", 4);
+    Letter.F = new Letter("F", 5);
+    Letter.G = new Letter("G", 7);
     Etude.Letter = Letter;
     var Util;
     (function (Util) {
