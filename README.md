@@ -1,5 +1,6 @@
-# etude.js
+# etude.js [![npm](https://img.shields.io/npm/v/etude.svg?maxAge=2592000)](https://www.npmjs.com/package/etude)
 JavaScript Music Theory API
+
 
 A port of [etude](https://github.com/andrewthehan/etude), the Java version. While similar, there are a few changes to take note of:
 - Accessbility of instance members were changed from `private` to `public`. The respective getters were also removed.
