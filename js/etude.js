@@ -863,5 +863,3 @@ exports.Chord = Chord;
     }
     Chord.Builder = Builder;
 })(Chord = exports.Chord || (exports.Chord = {}));
-let anotherScale = new Scale(new KeySignature(Key.fromString("G"), Mode.HARMONIC_MINOR));
-console.log(anotherScale.keys.map(k => k.toString())); //

@@ -9,7 +9,8 @@
     "build": "npm run build:compile && npm run build:run && npm run build:doc",
     "build:compile": "tsc",
     "build:run": "node js/etude.js",
-    "build:doc": "typedoc --out doc ts"
+    "build:doc": "typedoc --out doc ts",
+    "clean": "rm -r js && rm -r doc"
   },
   "repository": {
     "type": "git",

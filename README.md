@@ -3,7 +3,7 @@ JavaScript Music Theory API
 
 A port of [etude](https://github.com/andrewthehan/etude), the Java version. While similar, there are a few changes to take note of:
 - Accessbility of instance members were changed from `private` to `public`. The respective getters were also removed.
-- Various computed values (such as `offset` and `programNumber` were changed from methods to variables.
+- Various computed values (such as `offset` and `programNumber`) were changed from methods to variables.
 - Most of the `asList`, `iterator`, `stream` methods were removed due to the lack of native iterators and infinite streams in JavaScript.
 - Lack of most enum members. `values` was ported (and overloaded to take in `startingElement` for most enums).
 - `Pitch` not being `Comparable`. However, `compareTo` was ported.

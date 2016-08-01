@@ -70,7 +70,7 @@
 				<p>A port of <a href="https://github.com/andrewthehan/etude">etude</a>, the Java version. While similar, there are a few changes to take note of:</p>
 				<ul>
 					<li>Accessbility of instance members were changed from <code>private</code> to <code>public</code>. The respective getters were also removed.</li>
-					<li>Various computed values (such as <code>offset</code> and <code>programNumber</code> were changed from methods to variables.</li>
+					<li>Various computed values (such as <code>offset</code> and <code>programNumber</code>) were changed from methods to variables.</li>
 					<li>Most of the <code>asList</code>, <code>iterator</code>, <code>stream</code> methods were removed due to the lack of native iterators and infinite streams in JavaScript.</li>
 					<li>Lack of most enum members. <code>values</code> was ported (and overloaded to take in <code>startingElement</code> for most enums).</li>
 					<li><code>Pitch</code> not being <code>Comparable</code>. However, <code>compareTo</code> was ported.</li>
@@ -119,9 +119,40 @@
 <span class="hljs-built_in">console</span>.log(pitch.toString()); <span class="hljs-comment">// C4(48)</span>
 
 <span class="hljs-built_in">console</span>.log(pitch.halfStepUp().toString()); <span class="hljs-comment">// C#(49);</span>
-<span class="hljs-built_in">console</span>.log(pitch.halfStepUp(Accidental.Policy.PRIORITIZE_FLAT)); <span class="hljs-comment">// Db(49)</span>
+<span class="hljs-built_in">console</span>.log(pitch.halfStepUp(Accidental.Policy.PRIORITIZE_FLAT).toString()); <span class="hljs-comment">// Db(49)</span>
 
 <span class="hljs-built_in">console</span>.log(pitch.step(<span class="hljs-number">2</span>).toString()); <span class="hljs-comment">// Dn(50)</span>
+</code></pre>
+				<h4 id="chord">Chord</h4>
+				<pre><code class="lang-javascript"><span class="hljs-keyword">let</span> chord = Chord
+  .builder()
+  .setRoot(Pitch.fromString(<span class="hljs-string">"C4"</span>))
+  .add(Chord.Quality.MAJOR)
+  .build();
+<span class="hljs-built_in">console</span>.log(chord.toString()); <span class="hljs-comment">// {Cn4(48),En4(52),Gn4(55)}</span>
+
+<span class="hljs-keyword">let</span> anotherChord = Chord
+  .builder()
+  .setRoot(Pitch.fromString(<span class="hljs-string">"Ab4"</span>))
+  .add(Chord.Quality.MINOR)
+  .add(Interval.fromString(<span class="hljs-string">"M6"</span>))
+  .build();
+<span class="hljs-built_in">console</span>.log(anotherChord.toString()); <span class="hljs-comment">// {Ab4(56),Cb5(59),Eb5(63),Fn5(65)}</span>
+
+<span class="hljs-keyword">let</span> invertedChord = Chord
+  .builder()
+  .setRoot(Pitch.fromString(<span class="hljs-string">"C4"</span>))
+  .add(Chord.Quality.DIMINISHED_SEVENTH)
+  .setInversion(Inversion.FIRST)
+  .build();
+<span class="hljs-built_in">console</span>.log(invertedChord.toString()); <span class="hljs-comment">// {Eb4(51),Gb4(54),Bbb4(57),Cn5(60)}</span>
+</code></pre>
+				<h4 id="scale">Scale</h4>
+				<pre><code class="lang-javascript"><span class="hljs-keyword">let</span> scale = <span class="hljs-keyword">new</span> Scale(<span class="hljs-keyword">new</span> KeySignature(Key.fromString(<span class="hljs-string">"C"</span>), Mode.MAJOR));
+<span class="hljs-built_in">console</span>.log(scale.keys.map(k =&gt; k.toString())); <span class="hljs-comment">// [ 'Cn', 'Dn', 'En', 'Fn', 'Gn', 'An', 'Bn' ]</span>
+
+<span class="hljs-keyword">let</span> anotherScale = <span class="hljs-keyword">new</span> Scale(<span class="hljs-keyword">new</span> KeySignature(Key.fromString(<span class="hljs-string">"G"</span>), Mode.HARMONIC_MINOR));
+<span class="hljs-built_in">console</span>.log(anotherScale.keys.map(k =&gt; k.toString())); <span class="hljs-comment">// [ 'Gn', 'An', 'Bb', 'Cn', 'Dn', 'Eb', 'F#' ]</span>
 </code></pre>
 			</div>
 		</div>
