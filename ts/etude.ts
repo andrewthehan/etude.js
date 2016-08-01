@@ -97,8 +97,18 @@ export class Degree {
 	}
 }
 
-export enum Inversion {
-	ROOT, FIRST, SECOND, THIRD
+export class Inversion {
+	static ROOT = new Inversion(0);
+	static FIRST = new Inversion(1);
+	static SECOND = new Inversion(2);
+	static THIRD = new Inversion(3);
+
+	constructor(public value: number) {
+	}
+
+	toString(): string {
+		return Object.keys(Inversion).find(i => Inversion[i] === this);
+	}
 }
 
 export class Key {
@@ -526,7 +536,7 @@ export class Pitch {
 			throw new Error("Invalid program number: " + programNumber);
 		}
 		let key = Key.fromOffset(Util.floorMod(programNumber, MusicConstants.KEYS_IN_OCTAVE), policy);
-		let octave = programNumber / MusicConstants.KEYS_IN_OCTAVE;
+		let octave = Math.trunc(programNumber / MusicConstants.KEYS_IN_OCTAVE);
 		return new Pitch(key, octave);
 	}
 
@@ -595,11 +605,11 @@ export class Pitch {
 export class Scale {
 	private _keys: Key[];
 
-	constructor(public keySignature: KeySignature){
+	constructor(public keySignature: KeySignature) {
 		this._keys = Degree.values().map(d => keySignature.keyOf(d));
 	}
 
-	keys(): Key[] {
+	get keys(): Key[] {
 		return this._keys.slice();
 	}
 }

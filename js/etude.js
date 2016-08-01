@@ -89,13 +89,19 @@ Degree.DOMINANT = new Degree(5);
 Degree.SUBMEDIANT = new Degree(6);
 Degree.LEADING_TONE = new Degree(7);
 exports.Degree = Degree;
-(function (Inversion) {
-    Inversion[Inversion["ROOT"] = 0] = "ROOT";
-    Inversion[Inversion["FIRST"] = 1] = "FIRST";
-    Inversion[Inversion["SECOND"] = 2] = "SECOND";
-    Inversion[Inversion["THIRD"] = 3] = "THIRD";
-})(exports.Inversion || (exports.Inversion = {}));
-var Inversion = exports.Inversion;
+class Inversion {
+    constructor(value) {
+        this.value = value;
+    }
+    toString() {
+        return Object.keys(Inversion).find(i => Inversion[i] === this);
+    }
+}
+Inversion.ROOT = new Inversion(0);
+Inversion.FIRST = new Inversion(1);
+Inversion.SECOND = new Inversion(2);
+Inversion.THIRD = new Inversion(3);
+exports.Inversion = Inversion;
 class Key {
     constructor(letter, accidental = Accidental.NONE) {
         this.letter = letter;
@@ -472,7 +478,7 @@ class Pitch {
             throw new Error("Invalid program number: " + programNumber);
         }
         let key = Key.fromOffset(Util.floorMod(programNumber, MusicConstants.KEYS_IN_OCTAVE), policy);
-        let octave = programNumber / MusicConstants.KEYS_IN_OCTAVE;
+        let octave = Math.trunc(programNumber / MusicConstants.KEYS_IN_OCTAVE);
         return new Pitch(key, octave);
     }
     /**
@@ -539,7 +545,7 @@ class Scale {
         this.keySignature = keySignature;
         this._keys = Degree.values().map(d => keySignature.keyOf(d));
     }
-    keys() {
+    get keys() {
         return this._keys.slice();
     }
 }
@@ -857,3 +863,5 @@ exports.Chord = Chord;
     }
     Chord.Builder = Builder;
 })(Chord = exports.Chord || (exports.Chord = {}));
+let anotherScale = new Scale(new KeySignature(Key.fromString("G"), Mode.HARMONIC_MINOR));
+console.log(anotherScale.keys.map(k => k.toString())); //

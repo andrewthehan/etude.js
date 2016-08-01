@@ -41,11 +41,14 @@ export declare class Degree {
     static fromValue(value: any): Degree;
     toString(): string;
 }
-export declare enum Inversion {
-    ROOT = 0,
-    FIRST = 1,
-    SECOND = 2,
-    THIRD = 3,
+export declare class Inversion {
+    value: number;
+    static ROOT: Inversion;
+    static FIRST: Inversion;
+    static SECOND: Inversion;
+    static THIRD: Inversion;
+    constructor(value: number);
+    toString(): string;
 }
 export declare class Key {
     letter: Letter;
@@ -152,7 +155,7 @@ export declare class Scale {
     keySignature: KeySignature;
     private _keys;
     constructor(keySignature: KeySignature);
-    keys(): Key[];
+    keys: Key[];
 }
 export declare module Util {
     function add(a: number, b: number): number;
