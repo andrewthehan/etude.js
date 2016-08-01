@@ -30,5 +30,6 @@
   "bugs": {
     "url": "https://github.com/andrewthehan/etude.js/issues"
   },
-  "homepage": "https://github.com/andrewthehan/etude.js#readme"
+  "homepage": "https://github.com/andrewthehan/etude.js#readme",
+  "tonicExample": "const {Accidental, Chord, Degree, Interval, Inversion, Key, KeySignature, Letter, Mode, MusicConstants, Pitch, Scale} = require(\"etude\");"
 }
