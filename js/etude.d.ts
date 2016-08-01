@@ -41,31 +41,6 @@ export declare class Degree {
     static fromValue(value: any): Degree;
     toString(): string;
 }
-export declare class Interval {
-    quality: Interval.Quality;
-    distance: number;
-    offset: number;
-    constructor(quality: Interval.Quality, distance: number);
-    static fromString(intervalString: string): Interval;
-    toString(): string;
-    static between(a: Pitch, b: Pitch): Interval;
-    static isPerfect(distance: number): boolean;
-}
-export declare module Interval {
-    class Quality {
-        symbol: string;
-        static PERFECT: Quality;
-        static MAJOR: Quality;
-        static MINOR: Quality;
-        static DIMINISHED: Quality;
-        static DOUBLY_DIMINISHED: Quality;
-        static AUGMENTED: Quality;
-        static DOUBLY_AUGMENTED: Quality;
-        constructor(symbol: string);
-        static fromString(qualityString: string): Quality;
-        toString(): string;
-    }
-}
 export declare enum Inversion {
     ROOT = 0,
     FIRST = 1,
@@ -177,4 +152,78 @@ export declare module Util {
     function add(a: number, b: number): number;
     function floorMod(a: number, b: number): number;
     function rotate(array: any[], distance: number): void;
+}
+export declare class Interval {
+    quality: Interval.Quality;
+    distance: number;
+    offset: number;
+    constructor(quality: Interval.Quality, distance: number);
+    static fromString(intervalString: string): Interval;
+    toString(): string;
+    static between(a: Pitch, b: Pitch): Interval;
+    static isPerfect(distance: number): boolean;
+}
+export declare module Interval {
+    class Quality {
+        symbol: string;
+        static PERFECT: Quality;
+        static MAJOR: Quality;
+        static MINOR: Quality;
+        static DIMINISHED: Quality;
+        static DOUBLY_DIMINISHED: Quality;
+        static AUGMENTED: Quality;
+        static DOUBLY_AUGMENTED: Quality;
+        constructor(symbol: string);
+        static fromString(qualityString: string): Quality;
+        toString(): string;
+    }
+}
+export declare class Chord {
+    pitches: Pitch[];
+    constructor(pitches: Pitch[]);
+    static fromString(chordString: string): Chord;
+    toString(): string;
+    static builder(): Chord.RequiresRoot;
+}
+export declare module Chord {
+    class Quality {
+        intervalPattern: Interval[];
+        symbol: any;
+        static MAJOR: Quality;
+        static MINOR: Quality;
+        static DIMINISHED: Quality;
+        static AUGMENTED: Quality;
+        static MAJOR_SEVENTH: Quality;
+        static MINOR_SEVENTH: Quality;
+        static DOMINANT_SEVENTH: Quality;
+        static DIMINISHED_SEVENTH: Quality;
+        static HALF_DIMINISHED_SEVENTH: Quality;
+        static MINOR_MAJOR_SEVENTH: Quality;
+        static AUGMENTED_MAJOR_SEVENTH: Quality;
+        constructor(intervalPattern: Interval[], symbol: any);
+        toString(): string;
+    }
+    class Builder implements Base, RequiresRoot, Manipulate, End {
+        pitches: Set<Pitch>;
+        bottomDegree: Degree;
+        root: Pitch;
+        setRoot(root: Pitch): Manipulate;
+        add(element: Interval | Quality): Manipulate;
+        setInversion(inversion: Inversion): End;
+        setBottomDegree(degree: Degree): End;
+        build(): Chord;
+    }
+    interface Base {
+        build(): Chord;
+    }
+    interface RequiresRoot {
+        setRoot(root: Pitch): Manipulate;
+    }
+    interface Manipulate extends Base {
+        add(element: Interval | Quality): Manipulate;
+        setInversion(inversion: Inversion): End;
+        setBottomDegree(degree: Degree): End;
+    }
+    interface End extends Base {
+    }
 }

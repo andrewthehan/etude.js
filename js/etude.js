@@ -89,151 +89,6 @@ Degree.DOMINANT = new Degree(5);
 Degree.SUBMEDIANT = new Degree(6);
 Degree.LEADING_TONE = new Degree(7);
 exports.Degree = Degree;
-class Interval {
-    constructor(quality, distance) {
-        this.quality = quality;
-        this.distance = distance;
-        if (distance <= 0) {
-            throw new Error("Invalid interval: " + quality + distance + " (distance must be a positive integer)");
-        }
-        switch (quality) {
-            case Interval.Quality.PERFECT:
-                if (!Interval.isPerfect(distance)) {
-                    throw new Error("Invalid interval: " + quality + distance + " (distance cannot have a perfect quality)");
-                }
-                break;
-            case Interval.Quality.MAJOR:
-            case Interval.Quality.MINOR:
-                if (Interval.isPerfect(distance)) {
-                    throw new Error("Invalid interval: " + quality + distance + " (distance cannot have major or minor quality)");
-                }
-                break;
-            case Interval.Quality.DIMINISHED:
-            case Interval.Quality.DOUBLY_DIMINISHED:
-            case Interval.Quality.AUGMENTED:
-            case Interval.Quality.DOUBLY_AUGMENTED:
-                break;
-        }
-        // initialize offset to take into account octave
-        this.offset = Math.trunc((this.distance - 1) / Letter.size) * MusicConstants.KEYS_IN_OCTAVE;
-        // take into account normalized number (within the range of an octave)
-        this.offset += Mode.MAJOR
-            .stepPattern
-            .slice(0, this.distance - 1)
-            .reduce(Util.add, 0);
-        // take into account quality
-        switch (this.quality) {
-            case Interval.Quality.PERFECT:
-            case Interval.Quality.MAJOR:
-                break;
-            case Interval.Quality.MINOR:
-                --this.offset;
-                break;
-            case Interval.Quality.DIMINISHED:
-                this.offset -= Interval.isPerfect(this.distance) ? 1 : 2;
-                break;
-            case Interval.Quality.DOUBLY_DIMINISHED:
-                this.offset -= Interval.isPerfect(this.distance) ? 2 : 3;
-                break;
-            case Interval.Quality.AUGMENTED:
-                ++this.offset;
-                break;
-            case Interval.Quality.DOUBLY_AUGMENTED:
-                this.offset += 2;
-                break;
-        }
-    }
-    static fromString(intervalString) {
-        let matches = intervalString.match(/\D+|\d+/g);
-        if (matches.length < 2 || !matches[0].trim() || !matches[1].trim()) {
-            throw new Error("Invalid interval string: " + intervalString + " (missing information)");
-        }
-        else if (matches.length > 2) {
-            throw new Error("Invalid interval string: " + intervalString + " (contains extra information)");
-        }
-        let quality = Interval.Quality.fromString(matches[0]);
-        let distance = parseInt(matches[1]);
-        return new Interval(quality, distance);
-    }
-    toString() {
-        return this.quality.toString() + this.distance;
-    }
-    static between(a, b) {
-        let letterA = a.key.letter;
-        let letterB = b.key.letter;
-        if (a.isHigherThan(b) && a.octave === b.octave && letterA.offset > letterB.offset) {
-            throw new Error("Cannot create interval with negative distance");
-        }
-        let distance = 1 + Util.floorMod(letterB.ordinal() - letterA.ordinal(), Letter.size);
-        let offset = b.programNumber - a.programNumber;
-        offset -= Mode.MAJOR
-            .stepPattern
-            .slice(0, distance - 1)
-            .reduce(Util.add, 0);
-        let quality;
-        switch (offset) {
-            case -3:
-                if (Interval.isPerfect(distance)) {
-                    throw new Error("Cannot create interval for pitches: " + a + " -> " + b);
-                }
-                quality = Interval.Quality.DOUBLY_DIMINISHED;
-                break;
-            case -2:
-                quality = Interval.isPerfect(distance) ? Interval.Quality.DOUBLY_DIMINISHED : Interval.Quality.DIMINISHED;
-                break;
-            case -1:
-                quality = Interval.isPerfect(distance) ? Interval.Quality.DIMINISHED : Interval.Quality.MINOR;
-                break;
-            case 0:
-                quality = Interval.isPerfect(distance) ? Interval.Quality.PERFECT : Interval.Quality.MAJOR;
-                break;
-            case 1:
-                quality = Interval.Quality.AUGMENTED;
-                break;
-            case 2:
-                quality = Interval.Quality.DOUBLY_AUGMENTED;
-                break;
-            default:
-                throw new Error("Cannot create interval for pitches: " + a + " -> " + b);
-        }
-        return new Interval(quality, distance);
-    }
-    static isPerfect(distance) {
-        let normalized = distance % 7;
-        return normalized === 1 || normalized === 4 || normalized === 5;
-    }
-}
-exports.Interval = Interval;
-(function (Interval) {
-    class Quality {
-        constructor(symbol) {
-            this.symbol = symbol;
-        }
-        static fromString(qualityString) {
-            switch (qualityString) {
-                case "P": return Interval.Quality.PERFECT;
-                case "M": return Interval.Quality.MAJOR;
-                case "m": return Interval.Quality.MINOR;
-                case "d": return Interval.Quality.DIMINISHED;
-                case "dd": return Interval.Quality.DOUBLY_DIMINISHED;
-                case "A": return Interval.Quality.AUGMENTED;
-                case "AA": return Interval.Quality.DOUBLY_AUGMENTED;
-                default: throw new Error("Invalid quality string: " + qualityString);
-            }
-        }
-        toString() {
-            return this.symbol;
-        }
-    }
-    Quality.PERFECT = new Quality("P");
-    Quality.MAJOR = new Quality("M");
-    Quality.MINOR = new Quality("m");
-    Quality.DIMINISHED = new Quality("d");
-    Quality.DOUBLY_DIMINISHED = new Quality("dd");
-    Quality.AUGMENTED = new Quality("A");
-    Quality.DOUBLY_AUGMENTED = new Quality("AA");
-    Interval.Quality = Quality;
-})(Interval = exports.Interval || (exports.Interval = {}));
 (function (Inversion) {
     Inversion[Inversion["ROOT"] = 0] = "ROOT";
     Inversion[Inversion["FIRST"] = 1] = "FIRST";
@@ -696,4 +551,299 @@ var Util;
     }
     Util.rotate = rotate;
 })(Util = exports.Util || (exports.Util = {}));
-console.log(Letter.A.toString());
+class Interval {
+    constructor(quality, distance) {
+        this.quality = quality;
+        this.distance = distance;
+        if (distance <= 0) {
+            throw new Error("Invalid interval: " + quality + distance + " (distance must be a positive integer)");
+        }
+        switch (quality) {
+            case Interval.Quality.PERFECT:
+                if (!Interval.isPerfect(distance)) {
+                    throw new Error("Invalid interval: " + quality + distance + " (distance cannot have a perfect quality)");
+                }
+                break;
+            case Interval.Quality.MAJOR:
+            case Interval.Quality.MINOR:
+                if (Interval.isPerfect(distance)) {
+                    throw new Error("Invalid interval: " + quality + distance + " (distance cannot have major or minor quality)");
+                }
+                break;
+            case Interval.Quality.DIMINISHED:
+            case Interval.Quality.DOUBLY_DIMINISHED:
+            case Interval.Quality.AUGMENTED:
+            case Interval.Quality.DOUBLY_AUGMENTED:
+                break;
+        }
+        // initialize offset to take into account octave
+        this.offset = Math.trunc((this.distance - 1) / Letter.size) * MusicConstants.KEYS_IN_OCTAVE;
+        // take into account normalized number (within the range of an octave)
+        this.offset += Mode.MAJOR
+            .stepPattern
+            .slice(0, this.distance - 1)
+            .reduce(Util.add, 0);
+        // take into account quality
+        switch (this.quality) {
+            case Interval.Quality.PERFECT:
+            case Interval.Quality.MAJOR:
+                break;
+            case Interval.Quality.MINOR:
+                --this.offset;
+                break;
+            case Interval.Quality.DIMINISHED:
+                this.offset -= Interval.isPerfect(this.distance) ? 1 : 2;
+                break;
+            case Interval.Quality.DOUBLY_DIMINISHED:
+                this.offset -= Interval.isPerfect(this.distance) ? 2 : 3;
+                break;
+            case Interval.Quality.AUGMENTED:
+                ++this.offset;
+                break;
+            case Interval.Quality.DOUBLY_AUGMENTED:
+                this.offset += 2;
+                break;
+        }
+    }
+    static fromString(intervalString) {
+        let matches = intervalString.match(/\D+|\d+/g);
+        if (matches.length < 2 || !matches[0].trim() || !matches[1].trim()) {
+            throw new Error("Invalid interval string: " + intervalString + " (missing information)");
+        }
+        else if (matches.length > 2) {
+            throw new Error("Invalid interval string: " + intervalString + " (contains extra information)");
+        }
+        let quality = Interval.Quality.fromString(matches[0]);
+        let distance = parseInt(matches[1]);
+        return new Interval(quality, distance);
+    }
+    toString() {
+        return this.quality.toString() + this.distance;
+    }
+    static between(a, b) {
+        let letterA = a.key.letter;
+        let letterB = b.key.letter;
+        if (a.isHigherThan(b) && a.octave === b.octave && letterA.offset > letterB.offset) {
+            throw new Error("Cannot create interval with negative distance");
+        }
+        let distance = 1 + Util.floorMod(letterB.ordinal() - letterA.ordinal(), Letter.size);
+        let offset = b.programNumber - a.programNumber;
+        offset -= Mode.MAJOR
+            .stepPattern
+            .slice(0, distance - 1)
+            .reduce(Util.add, 0);
+        let quality;
+        switch (offset) {
+            case -3:
+                if (Interval.isPerfect(distance)) {
+                    throw new Error("Cannot create interval for pitches: " + a + " -> " + b);
+                }
+                quality = Interval.Quality.DOUBLY_DIMINISHED;
+                break;
+            case -2:
+                quality = Interval.isPerfect(distance) ? Interval.Quality.DOUBLY_DIMINISHED : Interval.Quality.DIMINISHED;
+                break;
+            case -1:
+                quality = Interval.isPerfect(distance) ? Interval.Quality.DIMINISHED : Interval.Quality.MINOR;
+                break;
+            case 0:
+                quality = Interval.isPerfect(distance) ? Interval.Quality.PERFECT : Interval.Quality.MAJOR;
+                break;
+            case 1:
+                quality = Interval.Quality.AUGMENTED;
+                break;
+            case 2:
+                quality = Interval.Quality.DOUBLY_AUGMENTED;
+                break;
+            default:
+                throw new Error("Cannot create interval for pitches: " + a + " -> " + b);
+        }
+        return new Interval(quality, distance);
+    }
+    static isPerfect(distance) {
+        let normalized = distance % 7;
+        return normalized === 1 || normalized === 4 || normalized === 5;
+    }
+}
+exports.Interval = Interval;
+(function (Interval) {
+    class Quality {
+        constructor(symbol) {
+            this.symbol = symbol;
+        }
+        static fromString(qualityString) {
+            switch (qualityString) {
+                case "P": return Interval.Quality.PERFECT;
+                case "M": return Interval.Quality.MAJOR;
+                case "m": return Interval.Quality.MINOR;
+                case "d": return Interval.Quality.DIMINISHED;
+                case "dd": return Interval.Quality.DOUBLY_DIMINISHED;
+                case "A": return Interval.Quality.AUGMENTED;
+                case "AA": return Interval.Quality.DOUBLY_AUGMENTED;
+                default: throw new Error("Invalid quality string: " + qualityString);
+            }
+        }
+        toString() {
+            return this.symbol;
+        }
+    }
+    Quality.PERFECT = new Quality("P");
+    Quality.MAJOR = new Quality("M");
+    Quality.MINOR = new Quality("m");
+    Quality.DIMINISHED = new Quality("d");
+    Quality.DOUBLY_DIMINISHED = new Quality("dd");
+    Quality.AUGMENTED = new Quality("A");
+    Quality.DOUBLY_AUGMENTED = new Quality("AA");
+    Interval.Quality = Quality;
+})(Interval = exports.Interval || (exports.Interval = {}));
+class Chord {
+    constructor(pitches) {
+        this.pitches = pitches;
+    }
+    static fromString(chordString) {
+        if (!chordString.includes("{") || !chordString.includes("}")) {
+            throw new Error("Invalid chord string: " + chordString + " (missing curly braces that enclose pitches)");
+        }
+        if (!chordString.startsWith("{") || !chordString.endsWith("}")) {
+            throw new Error("Invalid chord string: " + chordString + " (contains extra information)");
+        }
+        let pitchesString = chordString.substring(1, chordString.length - 1);
+        if (pitchesString.includes("{") || pitchesString.includes("}")) {
+            throw new Error("Invalid chord string: " + chordString + " (contains extra curly braces)");
+        }
+        let pitches = pitchesString
+            .split(",")
+            .map(Pitch.fromString);
+        return new Chord(pitches);
+    }
+    toString() {
+        return "{" + this.pitches.join(",") + "}";
+    }
+    static builder() {
+        return new Chord.Builder();
+    }
+}
+exports.Chord = Chord;
+(function (Chord) {
+    class Quality {
+        constructor(intervalPattern, symbol) {
+            this.intervalPattern = intervalPattern;
+            this.symbol = symbol;
+        }
+        toString() {
+            return this.symbol;
+        }
+    }
+    Quality.MAJOR = new Quality([
+        new Interval(Interval.Quality.PERFECT, 1),
+        new Interval(Interval.Quality.MAJOR, 3),
+        new Interval(Interval.Quality.PERFECT, 5)
+    ], "maj");
+    Quality.MINOR = new Quality([
+        new Interval(Interval.Quality.PERFECT, 1),
+        new Interval(Interval.Quality.MINOR, 3),
+        new Interval(Interval.Quality.PERFECT, 5)
+    ], "min");
+    Quality.DIMINISHED = new Quality([
+        new Interval(Interval.Quality.PERFECT, 1),
+        new Interval(Interval.Quality.MINOR, 3),
+        new Interval(Interval.Quality.DIMINISHED, 5)
+    ], "dim");
+    Quality.AUGMENTED = new Quality([
+        new Interval(Interval.Quality.PERFECT, 1),
+        new Interval(Interval.Quality.MAJOR, 3),
+        new Interval(Interval.Quality.AUGMENTED, 5)
+    ], "aug");
+    Quality.MAJOR_SEVENTH = new Quality([
+        new Interval(Interval.Quality.PERFECT, 1),
+        new Interval(Interval.Quality.MAJOR, 3),
+        new Interval(Interval.Quality.PERFECT, 5),
+        new Interval(Interval.Quality.MAJOR, 7)
+    ], "maj7");
+    Quality.MINOR_SEVENTH = new Quality([
+        new Interval(Interval.Quality.PERFECT, 1),
+        new Interval(Interval.Quality.MINOR, 3),
+        new Interval(Interval.Quality.PERFECT, 5),
+        new Interval(Interval.Quality.MINOR, 7)
+    ], "min7");
+    Quality.DOMINANT_SEVENTH = new Quality([
+        new Interval(Interval.Quality.PERFECT, 1),
+        new Interval(Interval.Quality.MAJOR, 3),
+        new Interval(Interval.Quality.PERFECT, 5),
+        new Interval(Interval.Quality.MINOR, 7)
+    ], "7");
+    Quality.DIMINISHED_SEVENTH = new Quality([
+        new Interval(Interval.Quality.PERFECT, 1),
+        new Interval(Interval.Quality.MINOR, 3),
+        new Interval(Interval.Quality.DIMINISHED, 5),
+        new Interval(Interval.Quality.DIMINISHED, 7)
+    ], "dim7");
+    Quality.HALF_DIMINISHED_SEVENTH = new Quality([
+        new Interval(Interval.Quality.PERFECT, 1),
+        new Interval(Interval.Quality.MINOR, 3),
+        new Interval(Interval.Quality.DIMINISHED, 5),
+        new Interval(Interval.Quality.MINOR, 7)
+    ], "m7(b5)");
+    Quality.MINOR_MAJOR_SEVENTH = new Quality([
+        new Interval(Interval.Quality.PERFECT, 1),
+        new Interval(Interval.Quality.MINOR, 3),
+        new Interval(Interval.Quality.PERFECT, 5),
+        new Interval(Interval.Quality.MAJOR, 7)
+    ], "mMaj7");
+    Quality.AUGMENTED_MAJOR_SEVENTH = new Quality([
+        new Interval(Interval.Quality.PERFECT, 1),
+        new Interval(Interval.Quality.MAJOR, 3),
+        new Interval(Interval.Quality.AUGMENTED, 5),
+        new Interval(Interval.Quality.MAJOR, 7)
+    ], "maj7(#5)");
+    Chord.Quality = Quality;
+    class Builder {
+        constructor() {
+            this.pitches = new Set();
+            this.bottomDegree = Degree.TONIC;
+        }
+        setRoot(root) {
+            this.root = root;
+            return this;
+        }
+        add(element) {
+            if (element instanceof Interval) {
+                this.pitches.add(this.root.step(element));
+            }
+            else if (element instanceof Quality) {
+                element
+                    .intervalPattern
+                    .forEach(i => this.pitches.add(this.root.step(i)));
+            }
+            return this;
+        }
+        setInversion(inversion) {
+            switch (inversion) {
+                case Inversion.ROOT: return this.setBottomDegree(Degree.TONIC);
+                case Inversion.FIRST: return this.setBottomDegree(Degree.MEDIANT);
+                case Inversion.SECOND: return this.setBottomDegree(Degree.DOMINANT);
+                case Inversion.THIRD: return this.setBottomDegree(Degree.LEADING_TONE);
+                default: throw new Error();
+            }
+        }
+        setBottomDegree(degree) {
+            this.bottomDegree = degree;
+            return this;
+        }
+        build() {
+            let pitchesArray = [...this.pitches].sort((a, b) => a.compareTo(b));
+            let keySignature = new KeySignature(this.root.key, Mode.MAJOR);
+            let letter = keySignature.keyOf(this.bottomDegree).letter;
+            let optional = pitchesArray.find(p => p.key.letter === letter);
+            if (optional === undefined) {
+                throw new Error("Unable to invert chord: missing " + this.bottomDegree + " pitch");
+            }
+            let lowestPitch = optional;
+            while (lowestPitch !== pitchesArray[0]) {
+                pitchesArray.push(lowestPitch.getHigherPitch(pitchesArray.shift().key));
+            }
+            return new Chord(pitchesArray);
+        }
+    }
+    Chord.Builder = Builder;
+})(Chord = exports.Chord || (exports.Chord = {}));

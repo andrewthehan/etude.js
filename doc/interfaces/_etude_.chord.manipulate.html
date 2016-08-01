@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Policy | etude</title>
+	<title>Manipulate | etude</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -60,76 +60,142 @@
 					<a href="../modules/_etude_.html">&quot;etude&quot;</a>
 				</li>
 				<li>
-					<a href="../classes/_etude_.accidental.html">Accidental</a>
+					<a href="../classes/_etude_.chord.html">Chord</a>
 				</li>
 				<li>
-					<a href="_etude_.accidental.policy.html">Policy</a>
+					<a href="_etude_.chord.manipulate.html">Manipulate</a>
 				</li>
 			</ul>
-			<h1>Enumeration Policy</h1>
+			<h1>Interface Manipulate</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<a href="_etude_.chord.base.html" class="tsd-signature-type">Base</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">Manipulate</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implemented by</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../classes/_etude_.chord.builder.html" class="tsd-signature-type">Builder</a></li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Enumeration members</h3>
+							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_etude_.accidental.policy.html#maintain_letter" class="tsd-kind-icon">MAINTAIN_<wbr>LETTER</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_etude_.accidental.policy.html#prioritize_flat" class="tsd-kind-icon">PRIORITIZE_<wbr>FLAT</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_etude_.accidental.policy.html#prioritize_natural" class="tsd-kind-icon">PRIORITIZE_<wbr>NATURAL</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_etude_.accidental.policy.html#prioritize_sharp" class="tsd-kind-icon">PRIORITIZE_<wbr>SHARP</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_etude_.chord.manipulate.html#add" class="tsd-kind-icon">add</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="_etude_.chord.manipulate.html#build" class="tsd-kind-icon">build</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_etude_.chord.manipulate.html#setbottomdegree" class="tsd-kind-icon">set<wbr>Bottom<wbr>Degree</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_etude_.chord.manipulate.html#setinversion" class="tsd-kind-icon">set<wbr>Inversion</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Enumeration members</h2>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="maintain_letter" class="tsd-anchor"></a>
-					<h3>MAINTAIN_<wbr>LETTER</h3>
-					<div class="tsd-signature tsd-kind-icon">MAINTAIN_<wbr>LETTER<span class="tsd-signature-symbol">:</span> </div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/andrewthehan/etude.js/blob/e518bc8/ts/etude.ts#L58">etude.ts:58</a></li>
-						</ul>
-					</aside>
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="add" class="tsd-anchor"></a>
+					<h3>add</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><a href="../classes/_etude_.interval.html" class="tsd-signature-type">Interval</a><span class="tsd-signature-symbol"> | </span><a href="../classes/_etude_.chord.quality.html" class="tsd-signature-type">Quality</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_etude_.chord.manipulate.html" class="tsd-signature-type">Manipulate</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/andrewthehan/etude.js/blob/e518bc8/ts/etude.ts#L947">etude.ts:947</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>element: <a href="../classes/_etude_.interval.html" class="tsd-signature-type">Interval</a><span class="tsd-signature-symbol"> | </span><a href="../classes/_etude_.chord.quality.html" class="tsd-signature-type">Quality</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_etude_.chord.manipulate.html" class="tsd-signature-type">Manipulate</a></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="prioritize_flat" class="tsd-anchor"></a>
-					<h3>PRIORITIZE_<wbr>FLAT</h3>
-					<div class="tsd-signature tsd-kind-icon">PRIORITIZE_<wbr>FLAT<span class="tsd-signature-symbol">:</span> </div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/andrewthehan/etude.js/blob/e518bc8/ts/etude.ts#L61">etude.ts:61</a></li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<a name="build" class="tsd-anchor"></a>
+					<h3>build</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">build<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/_etude_.chord.html" class="tsd-signature-type">Chord</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_etude_.chord.base.html">Base</a>.<a href="_etude_.chord.base.html#build">build</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/andrewthehan/etude.js/blob/e518bc8/ts/etude.ts#L939">etude.ts:939</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/_etude_.chord.html" class="tsd-signature-type">Chord</a></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="prioritize_natural" class="tsd-anchor"></a>
-					<h3>PRIORITIZE_<wbr>NATURAL</h3>
-					<div class="tsd-signature tsd-kind-icon">PRIORITIZE_<wbr>NATURAL<span class="tsd-signature-symbol">:</span> </div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/andrewthehan/etude.js/blob/e518bc8/ts/etude.ts#L59">etude.ts:59</a></li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="setbottomdegree" class="tsd-anchor"></a>
+					<h3>set<wbr>Bottom<wbr>Degree</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Bottom<wbr>Degree<span class="tsd-signature-symbol">(</span>degree<span class="tsd-signature-symbol">: </span><a href="../classes/_etude_.degree.html" class="tsd-signature-type">Degree</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_etude_.chord.end.html" class="tsd-signature-type">End</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/andrewthehan/etude.js/blob/e518bc8/ts/etude.ts#L949">etude.ts:949</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>degree: <a href="../classes/_etude_.degree.html" class="tsd-signature-type">Degree</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_etude_.chord.end.html" class="tsd-signature-type">End</a></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="prioritize_sharp" class="tsd-anchor"></a>
-					<h3>PRIORITIZE_<wbr>SHARP</h3>
-					<div class="tsd-signature tsd-kind-icon">PRIORITIZE_<wbr>SHARP<span class="tsd-signature-symbol">:</span> </div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/andrewthehan/etude.js/blob/e518bc8/ts/etude.ts#L60">etude.ts:60</a></li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="setinversion" class="tsd-anchor"></a>
+					<h3>set<wbr>Inversion</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Inversion<span class="tsd-signature-symbol">(</span>inversion<span class="tsd-signature-symbol">: </span><a href="../enums/_etude_.inversion.html" class="tsd-signature-type">Inversion</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_etude_.chord.end.html" class="tsd-signature-type">End</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/andrewthehan/etude.js/blob/e518bc8/ts/etude.ts#L948">etude.ts:948</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>inversion: <a href="../enums/_etude_.inversion.html" class="tsd-signature-type">Inversion</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_etude_.chord.end.html" class="tsd-signature-type">End</a></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -147,88 +213,67 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
-						<a href="_etude_.inversion.html" class="tsd-kind-icon">Inversion</a>
+						<a href="../enums/_etude_.inversion.html" class="tsd-kind-icon">Inversion</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/_etude_.accidental.html" class="tsd-kind-icon">Accidental</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_etude_.accidental.html" class="tsd-kind-icon">Accidental</a>
+						<a href="../classes/_etude_.chord.html" class="tsd-kind-icon">Chord</a>
 						<ul>
-							<li class="current tsd-kind-enum tsd-parent-kind-class tsd-is-static">
-								<a href="_etude_.accidental.policy.html" class="tsd-kind-icon">Policy</a>
+							<li class=" tsd-kind-class tsd-parent-kind-class">
+								<a href="../classes/_etude_.chord.builder.html" class="tsd-kind-icon">Builder</a>
+							</li>
+							<li class=" tsd-kind-class tsd-parent-kind-class">
+								<a href="../classes/_etude_.chord.quality.html" class="tsd-kind-icon">Quality</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="_etude_.chord.base.html" class="tsd-kind-icon">Base</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="_etude_.chord.end.html" class="tsd-kind-icon">End</a>
+							</li>
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="_etude_.chord.manipulate.html" class="tsd-kind-icon">Manipulate</a>
 								<ul>
-									<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-										<a href="_etude_.accidental.policy.html#maintain_letter" class="tsd-kind-icon">MAINTAIN_<wbr>LETTER</a>
+									<li class=" tsd-kind-method tsd-parent-kind-interface">
+										<a href="_etude_.chord.manipulate.html#add" class="tsd-kind-icon">add</a>
 									</li>
-									<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-										<a href="_etude_.accidental.policy.html#prioritize_flat" class="tsd-kind-icon">PRIORITIZE_<wbr>FLAT</a>
+									<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+										<a href="_etude_.chord.manipulate.html#build" class="tsd-kind-icon">build</a>
 									</li>
-									<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-										<a href="_etude_.accidental.policy.html#prioritize_natural" class="tsd-kind-icon">PRIORITIZE_<wbr>NATURAL</a>
+									<li class=" tsd-kind-method tsd-parent-kind-interface">
+										<a href="_etude_.chord.manipulate.html#setbottomdegree" class="tsd-kind-icon">set<wbr>Bottom<wbr>Degree</a>
 									</li>
-									<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-										<a href="_etude_.accidental.policy.html#prioritize_sharp" class="tsd-kind-icon">PRIORITIZE_<wbr>SHARP</a>
+									<li class=" tsd-kind-method tsd-parent-kind-interface">
+										<a href="_etude_.chord.manipulate.html#setinversion" class="tsd-kind-icon">set<wbr>Inversion</a>
 									</li>
 								</ul>
 							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="_etude_.chord.requiresroot.html" class="tsd-kind-icon">Requires<wbr>Root</a>
+							</li>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="../classes/_etude_.accidental.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="../classes/_etude_.chord.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="../classes/_etude_.accidental.html#offset" class="tsd-kind-icon">offset</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="../classes/_etude_.accidental.html#symbol" class="tsd-kind-icon">symbol</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="../classes/_etude_.accidental.html#double_flat" class="tsd-kind-icon">DOUBLE_<wbr>FLAT</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="../classes/_etude_.accidental.html#double_sharp" class="tsd-kind-icon">DOUBLE_<wbr>SHARP</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="../classes/_etude_.accidental.html#flat" class="tsd-kind-icon">FLAT</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="../classes/_etude_.accidental.html#natural" class="tsd-kind-icon">NATURAL</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="../classes/_etude_.accidental.html#none" class="tsd-kind-icon">NONE</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="../classes/_etude_.accidental.html#sharp" class="tsd-kind-icon">SHARP</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="../classes/_etude_.accidental.html#triple_flat" class="tsd-kind-icon">TRIPLE_<wbr>FLAT</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="../classes/_etude_.accidental.html#triple_sharp" class="tsd-kind-icon">TRIPLE_<wbr>SHARP</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static">
-								<a href="../classes/_etude_.accidental.html#_values" class="tsd-kind-icon">_values</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="../classes/_etude_.accidental.html#size" class="tsd-kind-icon">size</a>
+								<a href="../classes/_etude_.chord.html#pitches" class="tsd-kind-icon">pitches</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="../classes/_etude_.accidental.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
+								<a href="../classes/_etude_.chord.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="../classes/_etude_.accidental.html#fromoffset" class="tsd-kind-icon">from<wbr>Offset</a>
+								<a href="../classes/_etude_.chord.html#builder-1" class="tsd-kind-icon">builder</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="../classes/_etude_.accidental.html#fromstring" class="tsd-kind-icon">from<wbr>String</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
-								<a href="../classes/_etude_.accidental.html#values" class="tsd-kind-icon">values</a>
+								<a href="../classes/_etude_.chord.html#fromstring" class="tsd-kind-icon">from<wbr>String</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_etude_.chord.html" class="tsd-kind-icon">Chord</a>
-					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="../classes/_etude_.degree.html" class="tsd-kind-icon">Degree</a>
 					</li>

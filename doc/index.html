@@ -68,6 +68,14 @@
 				<h1 id="etude-js">etude.js</h1>
 				<p>JavaScript Music Theory API</p>
 				<p>Work in progress.</p>
+				<h2 id="installation">Installation</h2>
+				<pre><code>npm <span class="hljs-keyword">install</span> etude
+</code></pre><h2 id="usage">Usage</h2>
+				<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> {Key, Letter, Pitch} = <span class="hljs-built_in">require</span>(<span class="hljs-string">"Etude"</span>);
+
+<span class="hljs-keyword">let</span> pitch = <span class="hljs-keyword">new</span> Pitch(<span class="hljs-keyword">new</span> Key(Letter.C), <span class="hljs-number">4</span>);
+<span class="hljs-built_in">console</span>.log(pitch.toString()); <span class="hljs-comment">// C4(48)</span>
+</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">

@@ -10,7 +10,7 @@ npm install etude
 
 ## Usage
 ```javascript
-let {Key, Letter, Pitch} = require("Etude");
+const {Key, Letter, Pitch} = require("Etude");
 
 let pitch = new Pitch(new Key(Letter.C), 4);
 console.log(pitch.toString()); // C4(48)
