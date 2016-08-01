@@ -148,6 +148,12 @@ export declare class Pitch {
     static fromString(pitchString: string): Pitch;
     toString(): string;
 }
+export declare class Scale {
+    keySignature: KeySignature;
+    private _keys;
+    constructor(keySignature: KeySignature);
+    keys(): Key[];
+}
 export declare module Util {
     function add(a: number, b: number): number;
     function floorMod(a: number, b: number): number;

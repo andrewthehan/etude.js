@@ -534,6 +534,16 @@ class Pitch {
     }
 }
 exports.Pitch = Pitch;
+class Scale {
+    constructor(keySignature) {
+        this.keySignature = keySignature;
+        this._keys = Degree.values().map(d => keySignature.keyOf(d));
+    }
+    keys() {
+        return this._keys.slice();
+    }
+}
+exports.Scale = Scale;
 var Util;
 (function (Util) {
     function add(a, b) {

@@ -592,6 +592,18 @@ export class Pitch {
 	}
 }
 
+export class Scale {
+	private _keys: Key[];
+
+	constructor(public keySignature: KeySignature){
+		this._keys = Degree.values().map(d => keySignature.keyOf(d));
+	}
+
+	keys(): Key[] {
+		return this._keys.slice();
+	}
+}
+
 export module Util {
 	export function add(a: number, b: number): number {
 		return a + b;
