@@ -93,7 +93,7 @@ export class Degree {
 	}
 
 	toString(): string {
-		return Object.keys(Degree).filter(d => Degree[d] === this)[0];
+		return Object.keys(Degree).find(d => Degree[d] === this);
 	}
 }
 
@@ -531,7 +531,7 @@ export class Letter {
 	}
 
 	toString(): string {
-		return Object.keys(Letter).filter(l => Letter[l] === this)[0];
+		return Object.keys(Letter).find(l => Letter[l] === this);
 	}
 }
 

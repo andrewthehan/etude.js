@@ -76,7 +76,7 @@ class Degree {
         return Degree._values[value - 1];
     }
     toString() {
-        return Object.keys(Degree).filter(d => Degree[d] === this)[0];
+        return Object.keys(Degree).find(d => Degree[d] === this);
     }
 }
 Degree.size = 0;
@@ -471,7 +471,7 @@ class Letter {
         return this.toString().charCodeAt(0) - "A".charCodeAt(0);
     }
     toString() {
-        return Object.keys(Letter).filter(l => Letter[l] === this)[0];
+        return Object.keys(Letter).find(l => Letter[l] === this);
     }
 }
 Letter.size = 0;
@@ -696,3 +696,4 @@ var Util;
     }
     Util.rotate = rotate;
 })(Util = exports.Util || (exports.Util = {}));
+console.log(Letter.A.toString());
