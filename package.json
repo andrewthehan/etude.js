@@ -31,5 +31,8 @@
     "url": "https://github.com/andrewthehan/etude.js/issues"
   },
   "homepage": "https://github.com/andrewthehan/etude.js#readme",
-  "tonicExample": "// Use Node version 6!\nconst {Accidental, Chord, Degree, Interval, Inversion, Key, KeySignature, Letter, Mode, MusicConstants, Pitch, Scale} = require(\"etude\");"
+  "engine": {
+    "node": ">=6"
+  },
+  "tonicExample": "const {Accidental, Chord, Degree, Interval, Inversion, Key, KeySignature, Letter, Mode, MusicConstants, Pitch, Scale} = require(\"etude\");"
 }
