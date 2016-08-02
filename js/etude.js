@@ -379,6 +379,9 @@ class Pitch {
         this.key = key;
         this.octave = octave;
         this.programNumber = octave * MusicConstants.KEYS_IN_OCTAVE + key.offset;
+        if (this.programNumber < MusicConstants.SMALLEST_PROGRAM_NUMBER || this.programNumber > MusicConstants.LARGEST_PROGRAM_NUMBER) {
+            throw new Error("Invalid program number: " + this.programNumber);
+        }
     }
     apply(keySignature) {
         return new Pitch(this.key.apply(keySignature), this.octave);

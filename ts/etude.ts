@@ -422,6 +422,9 @@ export class Pitch {
 
 	constructor(public key: Key, public octave: number) {
 		this.programNumber = octave * MusicConstants.KEYS_IN_OCTAVE + key.offset;
+		if(this.programNumber < MusicConstants.SMALLEST_PROGRAM_NUMBER || this.programNumber > MusicConstants.LARGEST_PROGRAM_NUMBER){
+			throw new Error("Invalid program number: " + this.programNumber);
+		}
 	}
 
 	apply(keySignature: KeySignature): Pitch {
