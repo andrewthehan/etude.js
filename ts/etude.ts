@@ -422,7 +422,7 @@ export class Pitch {
 
 	constructor(public key: Key, public octave: number) {
 		this.programNumber = octave * MusicConstants.KEYS_IN_OCTAVE + key.offset;
-		if(this.programNumber < MusicConstants.SMALLEST_PROGRAM_NUMBER || this.programNumber > MusicConstants.LARGEST_PROGRAM_NUMBER){
+		if (this.programNumber < MusicConstants.SMALLEST_PROGRAM_NUMBER || this.programNumber > MusicConstants.LARGEST_PROGRAM_NUMBER) {
 			throw new Error("Invalid program number: " + this.programNumber);
 		}
 	}
@@ -461,7 +461,12 @@ export class Pitch {
 					break;
 			}
 
-			let octaveOffset = Math.trunc((amount.distance + this.key.letter.offset - letter.offset) / Letter.size);
+			// refer to Interval.between for how this equation was derived
+			let octaveOffset = (amount.distance
+				- 1
+				+ (Util.floorMod(this.key.letter.ordinal() - 2, Letter.size) - Util.floorMod(letter.ordinal() - 2, Letter.size))
+			) / Letter.size;
+
 			return new Pitch(new Key(letter, accidental), this.octave + octaveOffset);
 		}
 		else if (typeof amount === "number") {
@@ -716,12 +721,19 @@ export class Interval {
 			throw new Error("Cannot create interval with negative distance");
 		}
 
-		let distance = 1 + Util.floorMod(letterB.ordinal() - letterA.ordinal(), Letter.size);
+		/**
+		 * 1 (because no distance == 1)
+		 * + letterDistance (subtracted 2 because C is the start of the octave)
+		 * + octaveDistance
+		 */
+		let distance = 1
+			+ (Util.floorMod(letterB.ordinal() - 2, Letter.size) - Util.floorMod(letterA.ordinal() - 2, Letter.size))
+			+ (b.octave - a.octave) * Letter.size;
 
-		let offset = b.programNumber - a.programNumber;
+		let offset = (b.programNumber - a.programNumber) % MusicConstants.KEYS_IN_OCTAVE;
 		offset -= Mode.MAJOR
 			.stepPattern
-			.slice(0, distance - 1)
+			.slice(0, (distance - 1) % Letter.size)
 			.reduce(Util.add, 0);
 
 		let quality;
