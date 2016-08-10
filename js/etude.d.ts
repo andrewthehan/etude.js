@@ -232,8 +232,8 @@ export declare module Chord {
 export declare class KeySignature {
     key: Key;
     mode: Mode;
-    private static ORDER_OF_FLATS;
-    private static ORDER_OF_SHARPS;
+    static ORDER_OF_FLATS: Letter[];
+    static ORDER_OF_SHARPS: Letter[];
     keysWithAccidentals: Key[];
     accidentalCount: number;
     constructor(key: Key, mode: Mode);

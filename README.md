@@ -74,6 +74,15 @@ console.log(pitch.halfStepUp(Accidental.Policy.PRIORITIZE_FLAT).toString()); // 
 console.log(pitch.step(2).toString()); // Dn(50)
 ```
 
+#### Interval
+```javascript
+let interval = new Interval(Interval.Quality.MAJOR, 6);
+console.log(interval.offset); // 9
+
+let intervalBetween = Interval.between(Pitch.fromString("Eb4"), Pitch.fromString("Ab4"));
+console.log(intervalBetween.toString()); // P4
+```
+
 #### Chord
 ```javascript
 let chord = Chord
@@ -98,6 +107,17 @@ let invertedChord = Chord
   .setInversion(Inversion.FIRST)
   .build();
 console.log(invertedChord.toString()); // {Eb4(51),Gb4(54),Bbb4(57),Cn5(60)}
+```
+
+#### KeySignature
+```javascript
+let keySignature = new KeySignature(Key.fromString("C"), Mode.MAJOR);
+console.log(keySignature.keysWithAccidentals.map(k => k.toString())); // []
+
+let anotherKeySignature = new KeySignature(Key.fromString("C"), Mode.NATURAL_MINOR);
+console.log(anotherKeySignature.keysWithAccidentals.map(k => k.toString())); // [ 'Bb', 'Eb', 'Ab' ]
+
+console.log(KeySignature.ORDER_OF_SHARPS.map(k => k.toString()));  // [ 'F', 'C', 'G', 'D', 'A', 'E', 'B' ]
 ```
 
 #### Scale

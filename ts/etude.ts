@@ -972,8 +972,8 @@ export module Chord {
 }
 
 export class KeySignature {
-	private static ORDER_OF_FLATS = "BEADGCF".split("").map(Letter.fromChar);
-	private static ORDER_OF_SHARPS = "FCGDAEB".split("").map(Letter.fromChar);
+	public static ORDER_OF_FLATS = "BEADGCF".split("").map(Letter.fromChar);
+	public static ORDER_OF_SHARPS = "FCGDAEB".split("").map(Letter.fromChar);
 
 	keysWithAccidentals: Key[];
 	accidentalCount: number;
