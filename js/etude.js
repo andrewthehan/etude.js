@@ -288,25 +288,6 @@ class Key {
     }
 }
 exports.Key = Key;
-class KeySignature {
-    constructor(key, mode) {
-        this.key = key;
-        this.mode = mode;
-    }
-    degreeOf(key) {
-        let difference = Util.floorMod(key.letter.ordinal() - this.key.letter.ordinal(), Letter.size);
-        return Degree.fromValue(difference + 1);
-    }
-    keyOf(degree) {
-        let letters = Letter.values(this.key.letter);
-        let key = new Key(letters[degree.value - 1]);
-        return key.apply(this);
-    }
-    toString() {
-        return this.key.toString() + this.mode.toString();
-    }
-}
-exports.KeySignature = KeySignature;
 class Letter {
     constructor(offset) {
         this.offset = offset;
@@ -456,11 +437,7 @@ class Pitch {
         return this.programNumber < pitch.programNumber;
     }
     compareTo(pitch) {
-        let a = this.programNumber;
-        let b = pitch.programNumber;
-        return ((a < b) ? -1
-            : (a == b) ? 0
-                : 1);
+        return Util.compare(this.programNumber, pitch.programNumber);
     }
     getHigherPitch(key) {
         let pitch = new Pitch(key, this.octave);
@@ -562,6 +539,12 @@ var Util;
         return a + b;
     }
     Util.add = add;
+    function compare(a, b) {
+        return ((a < b) ? -1 :
+            (a == b) ? 0 :
+                1);
+    }
+    Util.compare = compare;
     function floorMod(a, b) {
         return ((a % b) + b) % b;
     }
@@ -876,3 +859,46 @@ exports.Chord = Chord;
     }
     Chord.Builder = Builder;
 })(Chord = exports.Chord || (exports.Chord = {}));
+class KeySignature {
+    constructor(key, mode) {
+        this.key = key;
+        this.mode = mode;
+        this.keysWithAccidentals = new Scale(this)
+            .keys
+            .filter(k => !k.isNone() && !k.isNatural());
+        if (this.keysWithAccidentals.length !== 0) {
+            let ordered;
+            switch (this.keysWithAccidentals[0].accidental) {
+                case Accidental.FLAT:
+                case Accidental.DOUBLE_FLAT:
+                case Accidental.TRIPLE_FLAT:
+                    ordered = KeySignature.ORDER_OF_FLATS;
+                    break;
+                case Accidental.SHARP:
+                case Accidental.DOUBLE_SHARP:
+                case Accidental.TRIPLE_SHARP:
+                    ordered = KeySignature.ORDER_OF_SHARPS;
+                    break;
+                default:
+                    throw new Error();
+            }
+            this.keysWithAccidentals.sort((a, b) => Util.compare(ordered.indexOf(a.letter), ordered.indexOf(b.letter)));
+        }
+        this.accidentalCount = this.keysWithAccidentals.length;
+    }
+    degreeOf(key) {
+        let difference = Util.floorMod(key.letter.ordinal() - this.key.letter.ordinal(), Letter.size);
+        return Degree.fromValue(difference + 1);
+    }
+    keyOf(degree) {
+        let letters = Letter.values(this.key.letter);
+        let key = new Key(letters[degree.value - 1]);
+        return key.apply(this);
+    }
+    toString() {
+        return this.key.toString() + this.mode.toString();
+    }
+}
+KeySignature.ORDER_OF_FLATS = "BEADGCF".split("").map(Letter.fromChar);
+KeySignature.ORDER_OF_SHARPS = "FCGDAEB".split("").map(Letter.fromChar);
+exports.KeySignature = KeySignature;

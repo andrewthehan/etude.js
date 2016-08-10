@@ -322,26 +322,6 @@ export class Key {
 	}
 }
 
-export class KeySignature {
-	constructor(public key: Key, public mode: Mode) {
-	}
-
-	degreeOf(key: Key): Degree {
-		let difference = Util.floorMod(key.letter.ordinal() - this.key.letter.ordinal(), Letter.size);
-		return Degree.fromValue(difference + 1);
-	}
-
-	keyOf(degree: Degree): Key {
-		let letters = Letter.values(this.key.letter);
-		let key = new Key(letters[degree.value - 1]);
-		return key.apply(this);
-	}
-
-	toString(): string {
-		return this.key.toString() + this.mode.toString();
-	}
-}
-
 export class Letter {
 	static size = 0;
 	private static _values = [];
@@ -510,13 +490,7 @@ export class Pitch {
 	}
 
 	compareTo(pitch: Pitch): number {
-		let a = this.programNumber;
-		let b = pitch.programNumber;
-		return (
-			(a < b) ? -1
-				: (a == b) ? 0
-					: 1
-		);
+		return Util.compare(this.programNumber, pitch.programNumber);
 	}
 
 	getHigherPitch(key: Key): Pitch {
@@ -625,6 +599,14 @@ export class Scale {
 export module Util {
 	export function add(a: number, b: number): number {
 		return a + b;
+	}
+
+	export function compare(a: number, b: number): number {
+		return (
+			(a < b) ? -1 :
+			(a == b) ? 0 :
+			1
+		);
 	}
 
 	export function floorMod(a: number, b: number): number {
@@ -803,7 +785,6 @@ export module Interval {
 		}
 	}
 }
-
 
 export class Chord {
 	constructor(public pitches: Pitch[]) {
@@ -987,5 +968,49 @@ export module Chord {
 	}
 
 	export interface End extends Base {
+	}
+}
+
+export class KeySignature {
+	private static ORDER_OF_FLATS = "BEADGCF".split("").map(Letter.fromChar);
+	private static ORDER_OF_SHARPS = "FCGDAEB".split("").map(Letter.fromChar);
+
+	keysWithAccidentals: Key[];
+	accidentalCount: number;
+
+	constructor(public key: Key, public mode: Mode) {
+		this.keysWithAccidentals = new Scale(this)
+			.keys
+			.filter(k => !k.isNone() && !k.isNatural());
+		if(this.keysWithAccidentals.length !== 0){
+			let ordered: Letter[];
+			switch(this.keysWithAccidentals[0].accidental){
+				case Accidental.FLAT: case Accidental.DOUBLE_FLAT: case Accidental.TRIPLE_FLAT:
+					ordered = KeySignature.ORDER_OF_FLATS;
+					break;
+				case Accidental.SHARP: case Accidental.DOUBLE_SHARP: case Accidental.TRIPLE_SHARP:
+					ordered = KeySignature.ORDER_OF_SHARPS;
+					break;
+				default:
+					throw new Error();
+			}
+			this.keysWithAccidentals.sort((a, b) => Util.compare(ordered.indexOf(a.letter), ordered.indexOf(b.letter)));
+		}
+		this.accidentalCount = this.keysWithAccidentals.length;
+	}
+
+	degreeOf(key: Key): Degree {
+		let difference = Util.floorMod(key.letter.ordinal() - this.key.letter.ordinal(), Letter.size);
+		return Degree.fromValue(difference + 1);
+	}
+
+	keyOf(degree: Degree): Key {
+		let letters = Letter.values(this.key.letter);
+		let key = new Key(letters[degree.value - 1]);
+		return key.apply(this);
+	}
+
+	toString(): string {
+		return this.key.toString() + this.mode.toString();
 	}
 }

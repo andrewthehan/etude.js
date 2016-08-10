@@ -77,14 +77,6 @@ export declare class Key {
     static fromString(keyString: string): Key;
     toString(): string;
 }
-export declare class KeySignature {
-    key: Key;
-    mode: Mode;
-    constructor(key: Key, mode: Mode);
-    degreeOf(key: Key): Degree;
-    keyOf(degree: Degree): Key;
-    toString(): string;
-}
 export declare class Letter {
     offset: number;
     static size: number;
@@ -159,6 +151,7 @@ export declare class Scale {
 }
 export declare module Util {
     function add(a: number, b: number): number;
+    function compare(a: number, b: number): number;
     function floorMod(a: number, b: number): number;
     function rotate(array: any[], distance: number): void;
 }
@@ -235,4 +228,16 @@ export declare module Chord {
     }
     interface End extends Base {
     }
+}
+export declare class KeySignature {
+    key: Key;
+    mode: Mode;
+    private static ORDER_OF_FLATS;
+    private static ORDER_OF_SHARPS;
+    keysWithAccidentals: Key[];
+    accidentalCount: number;
+    constructor(key: Key, mode: Mode);
+    degreeOf(key: Key): Degree;
+    keyOf(degree: Degree): Key;
+    toString(): string;
 }
