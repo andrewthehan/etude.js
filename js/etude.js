@@ -943,5 +943,3 @@ class KeySignature {
 KeySignature.ORDER_OF_FLATS = "BEADGCF".split("").map(Letter.fromChar);
 KeySignature.ORDER_OF_SHARPS = "FCGDAEB".split("").map(Letter.fromChar);
 exports.KeySignature = KeySignature;
-let oneMoreKeySignature = KeySignature.fromAccidentals(Accidental.SHARP, 3, Mode.MAJOR);
-console.log(oneMoreKeySignature.key + " " + oneMoreKeySignature.mode); // A MAJOR
