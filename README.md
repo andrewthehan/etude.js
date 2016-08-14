@@ -118,6 +118,9 @@ let anotherKeySignature = new KeySignature(Key.fromString("C"), Mode.NATURAL_MIN
 console.log(anotherKeySignature.keysWithAccidentals.map(k => k.toString())); // [ 'Bb', 'Eb', 'Ab' ]
 
 console.log(KeySignature.ORDER_OF_SHARPS.map(k => k.toString()));  // [ 'F', 'C', 'G', 'D', 'A', 'E', 'B' ]
+
+let oneMoreKeySignature = KeySignature.fromAccidentals(Accidental.SHARP, 3, Mode.MAJOR);
+console.log(oneMoreKeySignature.key + " " + oneMoreKeySignature.mode); // A MAJOR
 ```
 
 #### Scale

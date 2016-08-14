@@ -239,5 +239,6 @@ export declare class KeySignature {
     constructor(key: Key, mode: Mode);
     degreeOf(key: Key): Degree;
     keyOf(degree: Degree): Key;
+    static fromAccidentals(accidental: Accidental, count: number, mode: Mode): KeySignature;
     toString(): string;
 }

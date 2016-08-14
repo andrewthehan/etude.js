@@ -210,7 +210,7 @@ export class Key {
 	}
 
 	static fromOffset(offset: number, policy: Accidental.Policy = Accidental.Policy.PRIORITIZE_NATURAL): Key {
-		let letter;
+		let letter: Letter;
 		let accidental = Accidental.NONE;
 
 		switch (policy) {
@@ -604,8 +604,8 @@ export module Util {
 	export function compare(a: number, b: number): number {
 		return (
 			(a < b) ? -1 :
-			(a == b) ? 0 :
-			1
+				(a == b) ? 0 :
+					1
 		);
 	}
 
@@ -982,9 +982,9 @@ export class KeySignature {
 		this.keysWithAccidentals = new Scale(this)
 			.keys
 			.filter(k => !k.isNone() && !k.isNatural());
-		if(this.keysWithAccidentals.length !== 0){
+		if (this.keysWithAccidentals.length !== 0) {
 			let ordered: Letter[];
-			switch(this.keysWithAccidentals[0].accidental){
+			switch (this.keysWithAccidentals[0].accidental) {
 				case Accidental.FLAT: case Accidental.DOUBLE_FLAT: case Accidental.TRIPLE_FLAT:
 					ordered = KeySignature.ORDER_OF_FLATS;
 					break;
@@ -1008,6 +1008,58 @@ export class KeySignature {
 		let letters = Letter.values(this.key.letter);
 		let key = new Key(letters[degree.value - 1]);
 		return key.apply(this);
+	}
+
+	static fromAccidentals(accidental: Accidental, count: number, mode: Mode): KeySignature {
+		if (count < 0 || count > 7) {
+			throw new Error("Invalid accidental count: " + count);
+		}
+
+		let key;
+		let letter;
+		// determine the key assuming mode is MAJOR
+		switch (accidental) {
+			case Accidental.FLAT:
+				letter = KeySignature.ORDER_OF_FLATS[Util.floorMod(count - 2, Letter.size)];
+				key = new Key(
+					letter,
+					// accidental; if flats for key signature contain the letter, make the key flat
+					KeySignature.ORDER_OF_FLATS.slice(0, count).indexOf(letter) > -1
+						? Accidental.FLAT
+						: Accidental.NONE
+				);
+				break;
+			case Accidental.SHARP:
+				letter = KeySignature.ORDER_OF_SHARPS[Util.floorMod(count + 1, Letter.size)];
+				key = new Key(
+					letter,
+					// accidental; if sharps for key signature contain the letter, make the key sharp
+					KeySignature.ORDER_OF_SHARPS.slice(0, count).indexOf(letter) > -1
+						? Accidental.SHARP
+						: Accidental.NONE
+				);
+				break;
+			default:
+				throw new Error("Invalid accidental type to create KeySignature from: " + accidental);
+		}
+
+		// lower key by 3 half steps if the mode is NATURAL_MINOR
+		switch (mode) {
+			case Mode.MAJOR:
+				break;
+			case Mode.NATURAL_MINOR:
+				key = Key.fromOffset(
+					Util.floorMod(key.offset - 3, MusicConstants.KEYS_IN_OCTAVE),
+					accidental === Accidental.FLAT
+						? Accidental.Policy.PRIORITIZE_FLAT
+						: Accidental.Policy.PRIORITIZE_SHARP
+				);
+				break;
+			default:
+				throw new Error("Invalid mode type to create KeySignature from: " + mode);
+		}
+
+		return new KeySignature(key, mode);
 	}
 
 	toString(): string {

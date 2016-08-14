@@ -895,6 +895,47 @@ class KeySignature {
         let key = new Key(letters[degree.value - 1]);
         return key.apply(this);
     }
+    static fromAccidentals(accidental, count, mode) {
+        if (count < 0 || count > 7) {
+            throw new Error("Invalid accidental count: " + count);
+        }
+        let key;
+        let letter;
+        // determine the key assuming mode is MAJOR
+        switch (accidental) {
+            case Accidental.FLAT:
+                letter = KeySignature.ORDER_OF_FLATS[Util.floorMod(count - 2, Letter.size)];
+                key = new Key(letter, 
+                // accidental; if flats for key signature contain the letter, make the key flat
+                KeySignature.ORDER_OF_FLATS.slice(0, count).indexOf(letter) > -1
+                    ? Accidental.FLAT
+                    : Accidental.NONE);
+                break;
+            case Accidental.SHARP:
+                letter = KeySignature.ORDER_OF_SHARPS[Util.floorMod(count + 1, Letter.size)];
+                key = new Key(letter, 
+                // accidental; if sharps for key signature contain the letter, make the key sharp
+                KeySignature.ORDER_OF_SHARPS.slice(0, count).indexOf(letter) > -1
+                    ? Accidental.SHARP
+                    : Accidental.NONE);
+                break;
+            default:
+                throw new Error("Invalid accidental type to create KeySignature from: " + accidental);
+        }
+        // lower key by 3 half steps if the mode is NATURAL_MINOR
+        switch (mode) {
+            case Mode.MAJOR:
+                break;
+            case Mode.NATURAL_MINOR:
+                key = Key.fromOffset(Util.floorMod(key.offset - 3, MusicConstants.KEYS_IN_OCTAVE), accidental === Accidental.FLAT
+                    ? Accidental.Policy.PRIORITIZE_FLAT
+                    : Accidental.Policy.PRIORITIZE_SHARP);
+                break;
+            default:
+                throw new Error("Invalid mode type to create KeySignature from: " + mode);
+        }
+        return new KeySignature(key, mode);
+    }
     toString() {
         return this.key.toString() + this.mode.toString();
     }
@@ -902,3 +943,5 @@ class KeySignature {
 KeySignature.ORDER_OF_FLATS = "BEADGCF".split("").map(Letter.fromChar);
 KeySignature.ORDER_OF_SHARPS = "FCGDAEB".split("").map(Letter.fromChar);
 exports.KeySignature = KeySignature;
+let oneMoreKeySignature = KeySignature.fromAccidentals(Accidental.SHARP, 3, Mode.MAJOR);
+console.log(oneMoreKeySignature.key + " " + oneMoreKeySignature.mode); // A MAJOR
