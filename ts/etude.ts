@@ -622,9 +622,7 @@ export module Util {
 		return ((a % b) + b) % b;
 	}
 
-
-
-	export function* infiniteIteratorOf(array: any[]) {
+	export function* infiniteIteratorOf(array: any[]): IterableIterator<any> {
 		for (; ;) {
 			for (let l of array) {
 				yield l;

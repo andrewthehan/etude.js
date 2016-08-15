@@ -9,7 +9,7 @@ A port of [etude](https://github.com/andrewthehan/etude), the Java version. Whil
 - Accessbility of instance members were changed from `private` to `public`. The respective getters were also removed.
 - Various computed values (such as `offset` and `programNumber`) were changed from methods to variables.
 - `asList` was removed due to the way arrays are implemented in JavaScript (JavaScript arrays can do most of what Java ArrayLists can do). `stream` was removed due to the lack of infinite streams in JavaScript. `iterator` was implemented using generators.
-- Lack of most enum members. `values` was ported (and overloaded to take in `startingElement` for most enums).
+- Lack of most enum members. `values` was ported (and "overloaded" via default parameters to take in `startingElement` for Letter).
 - `Pitch` not being `Comparable`. However, `compareTo` was ported.
 - Complete alteration of utility methods. These were dependent on what was available in each respective language.
 - Lack of type checks due to the differences between Java and JavaScript as languages. However, static type checks are available if using [TypeScript](https://www.typescriptlang.org/).
@@ -137,7 +137,7 @@ console.log(scale.keys.map(k => k.toString())); // [ 'Cn', 'Dn', 'En', 'Fn', 'Gn
 
 let anotherScale = new Scale(new KeySignature(Key.fromString("G"), Mode.HARMONIC_MINOR));
 console.log(anotherScale.keys.map(k => k.toString())); // [ 'Gn', 'An', 'Bb', 'Cn', 'Dn', 'Eb', 'F#' ]
-
+
 let it = new Scale(KeySignature.fromAccidentals(Accidental.FLAT, 3, Mode.MAJOR)).iterator();
 let keys = [];
 for (let i = 0; i < 8; ++i) {
