@@ -89,6 +89,7 @@ export declare class Letter {
     static F: Letter;
     static G: Letter;
     constructor(offset: number);
+    static iterator(startingLetter?: Letter): IterableIterator<Letter>;
     static values(startingLetter?: Letter): Letter[];
     static isValid(letterChar: string): boolean;
     static fromChar(letterChar: string): Letter;
@@ -147,12 +148,14 @@ export declare class Scale {
     keySignature: KeySignature;
     private _keys;
     constructor(keySignature: KeySignature);
+    iterator(): IterableIterator<Key>;
     keys: Key[];
 }
 export declare module Util {
     function add(a: number, b: number): number;
     function compare(a: number, b: number): number;
     function floorMod(a: number, b: number): number;
+    function infiniteIteratorOf(array: any[]): IterableIterator<any>;
     function rotate(array: any[], distance: number): void;
 }
 export declare class Interval {

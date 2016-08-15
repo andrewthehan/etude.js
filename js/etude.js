@@ -294,6 +294,9 @@ class Letter {
         ++Letter.size;
         Letter._values.push(this);
     }
+    static *iterator(startingLetter = Letter.A) {
+        yield* Util.infiniteIteratorOf(Letter.values(startingLetter));
+    }
     static values(startingLetter = Letter.A) {
         let letters = Letter._values.slice();
         Util.rotate(letters, startingLetter.ordinal());
@@ -528,6 +531,9 @@ class Scale {
         this.keySignature = keySignature;
         this._keys = Degree.values().map(d => keySignature.keyOf(d));
     }
+    *iterator() {
+        yield* Util.infiniteIteratorOf(this._keys);
+    }
     get keys() {
         return this._keys.slice();
     }
@@ -549,6 +555,14 @@ var Util;
         return ((a % b) + b) % b;
     }
     Util.floorMod = floorMod;
+    function* infiniteIteratorOf(array) {
+        for (;;) {
+            for (let l of array) {
+                yield l;
+            }
+        }
+    }
+    Util.infiniteIteratorOf = infiniteIteratorOf;
     function rotate(array, distance) {
         while (distance-- > 0) {
             array.push(array.shift());

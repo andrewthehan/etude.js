@@ -1,3 +1,4 @@
+"use strict";
 
 export class Accidental {
 	static size: number = 0;
@@ -339,6 +340,10 @@ export class Letter {
 		Letter._values.push(this);
 	}
 
+	static *iterator(startingLetter: Letter = Letter.A): IterableIterator<Letter> {
+		yield* Util.infiniteIteratorOf(Letter.values(startingLetter));
+	}
+
 	static values(startingLetter: Letter = Letter.A): Letter[] {
 		let letters = Letter._values.slice();
 		Util.rotate(letters, startingLetter.ordinal());
@@ -591,6 +596,10 @@ export class Scale {
 		this._keys = Degree.values().map(d => keySignature.keyOf(d));
 	}
 
+	*iterator(): IterableIterator<Key> {
+		yield* Util.infiniteIteratorOf(this._keys);
+	}
+
 	get keys(): Key[] {
 		return this._keys.slice();
 	}
@@ -611,6 +620,16 @@ export module Util {
 
 	export function floorMod(a: number, b: number): number {
 		return ((a % b) + b) % b;
+	}
+
+
+
+	export function* infiniteIteratorOf(array: any[]) {
+		for (; ;) {
+			for (let l of array) {
+				yield l;
+			}
+		}
 	}
 
 	export function rotate(array: any[], distance: number): void {

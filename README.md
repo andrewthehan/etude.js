@@ -8,7 +8,7 @@ Try it [here](https://tonicdev.com/npm/etude)!
 A port of [etude](https://github.com/andrewthehan/etude), the Java version. While similar, there are a few changes to take note of:
 - Accessbility of instance members were changed from `private` to `public`. The respective getters were also removed.
 - Various computed values (such as `offset` and `programNumber`) were changed from methods to variables.
-- Most of the `asList`, `iterator`, `stream` methods were removed due to the lack of native iterators and infinite streams in JavaScript.
+- `asList` was removed due to the way arrays are implemented in JavaScript (JavaScript arrays can do most of what Java ArrayLists can do). `stream` was removed due to the lack of infinite streams in JavaScript. `iterator` was implemented using generators.
 - Lack of most enum members. `values` was ported (and overloaded to take in `startingElement` for most enums).
 - `Pitch` not being `Comparable`. However, `compareTo` was ported.
 - Complete alteration of utility methods. These were dependent on what was available in each respective language.
@@ -46,6 +46,13 @@ For extensive example usage, refer to the Java version's [unit tests](https://gi
 ```javascript
 let letter = Letter.A;
 console.log(letter.toString()); // A
+
+let it = Letter.iterator(Letter.C);
+let letters = [];
+for (let i = 0; i < 8; ++i) {
+  letters.push(it.next().value);
+}
+console.log(letters.map(l => l.toString())); // [ 'C', 'D', 'E', 'F', 'G', 'A', 'B', 'C' ]
 ```
 
 #### Key
@@ -130,4 +137,11 @@ console.log(scale.keys.map(k => k.toString())); // [ 'Cn', 'Dn', 'En', 'Fn', 'Gn
 
 let anotherScale = new Scale(new KeySignature(Key.fromString("G"), Mode.HARMONIC_MINOR));
 console.log(anotherScale.keys.map(k => k.toString())); // [ 'Gn', 'An', 'Bb', 'Cn', 'Dn', 'Eb', 'F#' ]
+
+let it = new Scale(KeySignature.fromAccidentals(Accidental.FLAT, 3, Mode.MAJOR)).iterator();
+let keys = [];
+for (let i = 0; i < 8; ++i) {
+  keys.push(it.next().value);
+}
+console.log(keys.map(k => k.toString())); // [ 'Eb', 'Fn', 'Gn', 'Ab', 'Bb', 'Cn', 'Dn', 'Eb' ]
 ```
