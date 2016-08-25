@@ -1,8 +1,6 @@
 # etude.js [![npm version](https://badge.fury.io/js/etude.svg)](https://badge.fury.io/js/etude)
 JavaScript Music Theory API
 
-Demo [here](https://andrewthehan.github.io/etude-demo/)!
-
 Try it [here](https://tonicdev.com/npm/etude)!
 
 A port of [etude](https://github.com/andrewthehan/etude), the Java version. While similar, there are a few changes to take note of:
