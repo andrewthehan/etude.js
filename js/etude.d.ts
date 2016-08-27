@@ -158,6 +158,26 @@ export declare module Util {
     function infiniteIteratorOf(array: any[]): IterableIterator<any>;
     function rotate(array: any[], distance: number): void;
 }
+export declare class Value {
+    duration: number;
+    static size: number;
+    private static _values;
+    static DOUBLE_WHOLE: Value;
+    static WHOLE: Value;
+    static HALF: Value;
+    static QUARTER: Value;
+    static EIGHTH: Value;
+    static SIXTEENTH: Value;
+    static THIRTY_SECOND: Value;
+    static SIXTY_FOURTH: Value;
+    static HUNDRED_TWENTY_EIGHTH: Value;
+    static TWO_HUNDRED_FIFTY_SIXTH: Value;
+    constructor(duration: number);
+    static fromDuration(duration: number): Value;
+    static fromString(valueString: string): Value;
+    static values(): Value[];
+    toString(): string;
+}
 export declare class Interval {
     quality: Interval.Quality;
     distance: number;

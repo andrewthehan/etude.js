@@ -570,6 +570,60 @@ var Util;
     }
     Util.rotate = rotate;
 })(Util = exports.Util || (exports.Util = {}));
+class Value {
+    constructor(duration) {
+        this.duration = duration;
+        ++Value.size;
+        Value._values.push(this);
+    }
+    static fromDuration(duration) {
+        if (duration === 0) {
+            throw new Error("Invalid duration: " + duration + " (cannot be zero)");
+        }
+        let index = Math.log(duration) / Math.log(2);
+        // if index is not an integer value
+        if (index % 1 !== 0) {
+            throw new Error("Invalid duration: " + duration + " (cannot be represented as a value)");
+        }
+        // 1 - index due to the order of enums
+        return Value.values()[1 - index];
+    }
+    static fromString(valueString) {
+        let duration = 0;
+        if (valueString.match("\\d+\\/\\d+")) {
+            let split = valueString.split("/");
+            duration = parseFloat(split[0]) / parseFloat(split[1]);
+        }
+        else {
+            try {
+                duration = parseFloat(valueString);
+            }
+            catch (e) {
+                throw new Error("Invalid value string: " + valueString + " (does not match a valid form)");
+            }
+        }
+        return Value.fromDuration(duration);
+    }
+    static values() {
+        return Value._values.slice();
+    }
+    toString() {
+        return Object.keys(Value).filter(v => Value[v] === this)[0];
+    }
+}
+Value.size = 0;
+Value._values = [];
+Value.DOUBLE_WHOLE = new Value(2.0);
+Value.WHOLE = new Value(1.0);
+Value.HALF = new Value(0.5);
+Value.QUARTER = new Value(0.25);
+Value.EIGHTH = new Value(0.125);
+Value.SIXTEENTH = new Value(0.0625);
+Value.THIRTY_SECOND = new Value(0.03125);
+Value.SIXTY_FOURTH = new Value(0.015625);
+Value.HUNDRED_TWENTY_EIGHTH = new Value(0.0078125);
+Value.TWO_HUNDRED_FIFTY_SIXTH = new Value(0.00390625);
+exports.Value = Value;
 class Interval {
     constructor(quality, distance) {
         this.quality = quality;

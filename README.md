@@ -143,3 +143,15 @@ for (let i = 0; i < 8; ++i) {
 }
 console.log(keys.map(k => k.toString())); // [ 'Eb', 'Fn', 'Gn', 'Ab', 'Bb', 'Cn', 'Dn', 'Eb' ]
 ```
+
+#### Value
+```javascript
+let value = Value.QUARTER;
+console.log(value.duration === 0.25); // true
+
+let valueFromDuration = Value.fromDuration(1.0);
+console.log(valueFromDuration === Value.WHOLE); // true
+
+let valueFromString = Value.fromString("1/2");
+console.log(valueFromString === Value.HALF); // true
+```

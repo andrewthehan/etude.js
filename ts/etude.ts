@@ -637,6 +637,67 @@ export module Util {
 	}
 }
 
+export class Value {
+	static size: number = 0;
+	private static _values: Value[] = [];
+
+	static DOUBLE_WHOLE = new Value(2.0);
+	static WHOLE = new Value(1.0);
+	static HALF = new Value(0.5);
+	static QUARTER = new Value(0.25);
+	static EIGHTH = new Value(0.125);
+	static SIXTEENTH = new Value(0.0625);
+	static THIRTY_SECOND = new Value(0.03125);
+	static SIXTY_FOURTH = new Value(0.015625);
+	static HUNDRED_TWENTY_EIGHTH = new Value(0.0078125);
+	static TWO_HUNDRED_FIFTY_SIXTH = new Value(0.00390625);
+
+	constructor(public duration: number) {
+		++Value.size;
+		Value._values.push(this);
+	}
+
+	static fromDuration(duration: number): Value {
+		if (duration === 0) {
+			throw new Error("Invalid duration: " + duration + " (cannot be zero)");
+		}
+		let index = Math.log(duration) / Math.log(2);
+		// if index is not an integer value
+		if (index % 1 !== 0) {
+			throw new Error("Invalid duration: " + duration + " (cannot be represented as a value)");
+		}
+
+		// 1 - index due to the order of enums
+		return Value.values()[1 - index];
+	}
+
+	static fromString(valueString: string): Value {
+		let duration = 0;
+		if (valueString.match("\\d+\\/\\d+")) {
+			let split = valueString.split("/");
+			duration = parseFloat(split[0]) / parseFloat(split[1]);
+		}
+		else {
+			try {
+				duration = parseFloat(valueString);
+			}
+			catch (e) {
+				throw new Error("Invalid value string: " + valueString + " (does not match a valid form)");
+			}
+		}
+
+		return Value.fromDuration(duration);
+	}
+
+	static values(): Value[] {
+		return Value._values.slice();
+	}
+
+	toString(): string {
+		return Object.keys(Value).filter(v => Value[v] === this)[0];
+	}
+}
+
 export class Interval {
 	offset: number;
 
