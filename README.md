@@ -11,7 +11,7 @@ A port of [etude](https://github.com/andrewthehan/etude), the Java version. Whil
 - `Pitch` not being `Comparable`. However, `compareTo` was ported.
 - Complete alteration of utility methods. These were dependent on what was available in each respective language.
 - Lack of type checks due to the differences between Java and JavaScript as languages. However, static type checks are available if using [TypeScript](https://www.typescriptlang.org/).
-- Any whole number will not contain a decimal point when converted to a string (e.g. `1.0` will be converted to "1.0" in Java whereas `1.0` will be converted to "1" in JavaScript). This is relevant for Value.DOUBLE_WHOLE and Value.WHOLE.
+- Any whole number will not contain a decimal point when converted to a string (e.g. `1.0` will be converted to "1.0" in Java whereas `1.0` will be converted to "1" in JavaScript). This is relevant for `Value.DOUBLE_WHOLE` and `Value.WHOLE`.
 - Small syntactical changes
 
   | Java                        | JavaScript         | Reason                                    |
