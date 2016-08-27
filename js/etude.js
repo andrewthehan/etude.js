@@ -358,6 +358,34 @@ var MusicConstants;
     MusicConstants.SMALLEST_PROGRAM_NUMBER = 0;
     MusicConstants.LARGEST_PROGRAM_NUMBER = 127;
 })(MusicConstants = exports.MusicConstants || (exports.MusicConstants = {}));
+class Note {
+    constructor(pitch, value) {
+        this.pitch = pitch;
+        this.value = value;
+    }
+    static fromString(noteString) {
+        let split = noteString.split("[");
+        if (split.length < 2 || !split[0].trim() || !split[1].trim()) {
+            throw new Error("Invalid note string: " + noteString + " (missing information)");
+        }
+        else if (split.length > 2) {
+            throw new Error("Invalid note string: " + noteString + " (contains extra information)");
+        }
+        let pitch = Pitch.fromString(split[0]);
+        if (!split[1].includes("]")) {
+            throw new Error("Invalid note string: " + noteString + " (missing closing bracket)");
+        }
+        else if (!split[1].endsWith("]")) {
+            throw new Error("Invalid note string: " + noteString + " (contains extra information)");
+        }
+        let value = Value.fromString(split[1].substring(0, split[1].length - 1));
+        return new Note(pitch, value);
+    }
+    toString() {
+        return this.pitch + "[" + this.value + "]";
+    }
+}
+exports.Note = Note;
 class Pitch {
     constructor(key, octave) {
         this.key = key;
@@ -608,7 +636,7 @@ class Value {
         return Value._values.slice();
     }
     toString() {
-        return Object.keys(Value).filter(v => Value[v] === this)[0];
+        return this.duration.toString();
     }
 }
 Value.size = 0;

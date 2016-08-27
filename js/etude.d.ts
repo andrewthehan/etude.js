@@ -117,6 +117,13 @@ export declare module MusicConstants {
     const SMALLEST_PROGRAM_NUMBER: number;
     const LARGEST_PROGRAM_NUMBER: number;
 }
+export declare class Note {
+    pitch: Pitch;
+    value: Value;
+    constructor(pitch: Pitch, value: Value);
+    static fromString(noteString: string): Note;
+    toString(): string;
+}
 export declare class Pitch {
     key: Key;
     octave: number;

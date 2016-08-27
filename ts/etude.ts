@@ -402,6 +402,37 @@ export module MusicConstants {
 	export const LARGEST_PROGRAM_NUMBER = 127;
 }
 
+export class Note {
+	constructor(public pitch: Pitch, public value: Value) {
+	}
+
+	static fromString(noteString: string): Note {
+		let split = noteString.split("[");
+		if (split.length < 2 || !split[0].trim() || !split[1].trim()) {
+			throw new Error("Invalid note string: " + noteString + " (missing information)");
+		}
+		else if (split.length > 2) {
+			throw new Error("Invalid note string: " + noteString + " (contains extra information)");
+		}
+
+		let pitch = Pitch.fromString(split[0]);
+
+		if (!split[1].includes("]")) {
+			throw new Error("Invalid note string: " + noteString + " (missing closing bracket)");
+		}
+		else if (!split[1].endsWith("]")) {
+			throw new Error("Invalid note string: " + noteString + " (contains extra information)");
+		}
+
+		let value = Value.fromString(split[1].substring(0, split[1].length - 1));
+		return new Note(pitch, value);
+	}
+
+	toString(): string {
+		return this.pitch + "[" + this.value + "]";
+	}
+}
+
 export class Pitch {
 	programNumber: number;
 
@@ -694,7 +725,7 @@ export class Value {
 	}
 
 	toString(): string {
-		return Object.keys(Value).filter(v => Value[v] === this)[0];
+		return this.duration.toString();
 	}
 }
 
