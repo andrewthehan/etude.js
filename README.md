@@ -20,17 +20,30 @@ A port of [etude](https://github.com/andrewthehan/etude), the Java version. Whil
   | `interval.getNumber()`      | `interval.distance`| `number` is a reserved word in JavaScript |
 
 ## Installation
+### Browser
+Add this line to your html file:
+```html
+<script type="text/javascript" src="https://npmcdn.com/etude/js/etude-browser.js"></script>
+```
+This method adds `etude` to the global namespace (e.g. `etude.Letter`).
+
+Note: this is hosted at [npmcdn](https://npmcdn.com/). If you do not wish to use npmcdn, use [Browserify](http://browserify.org/) along with the require methods below. If you do not wish to use either, download the [file](https://raw.githubusercontent.com/andrewthehan/etude.js/master/js/etude-browser.js) and add this line to your html file:
+```html
+<script type="text/javascript" src="path/to/file/etude-browser.js"></script>
+```
+
+### require
+First install the package.
 ```
 npm install etude
 ```
 
-## Usage
-### require
+Then include the package in your code using one of the following methods:
 #### Top level module:
 ```javascript
-const Etude = require("etude");
+const etude = require("etude");
 ```
-This method requires you to prepend each module with `Etude` (e.g. `Etude.Letter.A`).
+This method requires you to prepend each module with `etude` (e.g. `etude.Letter`).
 
 #### Each module separately:
 ```javascript

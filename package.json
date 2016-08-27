@@ -6,9 +6,10 @@
   "typings": "js/etude",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build:compile && npm run build:run",
+    "build": "npm run build:compile && npm run build:run && npm run build:package",
     "build:compile": "tsc",
     "build:run": "node js/etude.js",
+    "build:package": "echo window.etude = require('./etude.js'); > js/package.js && browserify js/package.js -s window -o js/etude-browser.js && rm js/package.js",
     "clean": "rm -rf js"
   },
   "repository": {
