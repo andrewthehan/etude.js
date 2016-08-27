@@ -51,7 +51,7 @@ const {Accidental, Chord, Degree, Interval, Inversion, Key, KeySignature, Letter
 ```
 This method allows you to omit modules (i.e. `const {Letter} = require("etude");`).
 
-### Examples
+## Examples
 For extensive example usage, refer to the Java version's [unit tests](https://github.com/andrewthehan/etude/tree/master/src/test/java/tests).
 
 #### Letter
