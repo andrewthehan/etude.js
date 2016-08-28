@@ -89,6 +89,44 @@ Degree.DOMINANT = new Degree(5);
 Degree.SUBMEDIANT = new Degree(6);
 Degree.LEADING_TONE = new Degree(7);
 exports.Degree = Degree;
+class Dynamic {
+    constructor(symbol) {
+        this.symbol = symbol;
+        ++Dynamic.size;
+        Dynamic._values.push(this);
+    }
+    crescendo() {
+        let index = this.ordinal() + 1;
+        if (index >= Dynamic.size) {
+            throw new Error("Unable to apply crescendo on " + this);
+        }
+        return Dynamic._values[index];
+    }
+    diminuendo() {
+        let index = this.ordinal() - 1;
+        if (index < 0) {
+            throw new Error("Unable to apply diminuendo on " + this);
+        }
+        return Dynamic._values[index];
+    }
+    ordinal() {
+        return Dynamic._values.map(d => d.toString()).indexOf(this.toString());
+    }
+    toString() {
+        return this.symbol;
+    }
+}
+Dynamic.size = 0;
+Dynamic._values = [];
+Dynamic.PIANISSISSIMO = new Dynamic("ppp");
+Dynamic.PIANISSIMO = new Dynamic("pp");
+Dynamic.PIANO = new Dynamic("p");
+Dynamic.MEZZO_PIANO = new Dynamic("mp");
+Dynamic.MEZZO_FORTE = new Dynamic("mf");
+Dynamic.FORTE = new Dynamic("f");
+Dynamic.FORTISSIMO = new Dynamic("ff");
+Dynamic.FORTISSISSIMO = new Dynamic("fff");
+exports.Dynamic = Dynamic;
 class Inversion {
     constructor(value) {
         this.value = value;

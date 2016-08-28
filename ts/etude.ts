@@ -98,6 +98,50 @@ export class Degree {
 	}
 }
 
+export class Dynamic {
+	static size = 0;
+	private static _values = [];
+
+	static PIANISSISSIMO = new Dynamic("ppp");
+	static PIANISSIMO = new Dynamic("pp");
+	static PIANO = new Dynamic("p");
+	static MEZZO_PIANO = new Dynamic("mp");
+	static MEZZO_FORTE = new Dynamic("mf");
+	static FORTE = new Dynamic("f");
+	static FORTISSIMO = new Dynamic("ff");
+	static FORTISSISSIMO = new Dynamic("fff");
+
+	constructor(public symbol: string) {
+		++Dynamic.size;
+		Dynamic._values.push(this);
+	}
+
+	crescendo(): Dynamic {
+		let index = this.ordinal() + 1;
+		if (index >= Dynamic.size) {
+			throw new Error("Unable to apply crescendo on " + this);
+		}
+		return Dynamic._values[index];
+	}
+
+	diminuendo(): Dynamic {
+		let index = this.ordinal() - 1;
+		if (index < 0) {
+			throw new Error("Unable to apply diminuendo on " + this);
+		}
+		return Dynamic._values[index];
+	}
+
+
+	ordinal(): number {
+		return Dynamic._values.map(d => d.toString()).indexOf(this.toString());
+	}
+
+	toString(): string {
+		return this.symbol;
+	}
+}
+
 export class Inversion {
 	static ROOT = new Inversion(0);
 	static FIRST = new Inversion(1);

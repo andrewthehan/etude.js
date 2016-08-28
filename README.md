@@ -37,7 +37,7 @@ If you do not wish to use npmcdn, use [Browserify](http://browserify.org/) along
 ```
 Any of the above methods adds `etude` to the global namespace (e.g. `etude.Letter`). To avoid prepending `etude` to each module name with each use, add this line:
 ```javascript
-const {Accidental, Chord, Degree, Interval, Inversion, Key, KeySignature, Letter, Mode, MusicConstants, Pitch, Scale} = etude;
+const {Accidental, Chord, Degree, Dynamic, Interval, Inversion, Key, KeySignature, Letter, Mode, MusicConstants, Note, Pitch, Scale, Value} = etude;
 ```
 
 ### require
@@ -54,7 +54,7 @@ This method requires you to prepend each module with `etude` (e.g. `etude.Letter
 
 #### Each module separately:
 ```javascript
-const {Accidental, Chord, Degree, Interval, Inversion, Key, KeySignature, Letter, Mode, MusicConstants, Pitch, Scale} = require("etude");
+const {Accidental, Chord, Degree, Dynamic, Interval, Inversion, Key, KeySignature, Letter, Mode, MusicConstants, Note, Pitch, Scale, Value} = require("etude");
 ```
 This method allows you to omit modules (i.e. `const {Letter} = require("etude");`).
 
@@ -163,6 +163,15 @@ for (let i = 0; i < 8; ++i) {
   keys.push(it.next().value);
 }
 console.log(keys.map(k => k.toString())); // [ 'Eb', 'Fn', 'Gn', 'Ab', 'Bb', 'Cn', 'Dn', 'Eb' ]
+```
+
+#### Dynamic
+```javascript
+let dynamic = Dynamic.MEZZO_FORTE;
+console.log(dynamic.toString()); // mf
+
+console.log(dynamic.crescendo().toString()); // f
+console.log(dynamic.diminuendo().toString()); // mp
 ```
 
 #### Value

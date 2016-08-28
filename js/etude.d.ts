@@ -41,6 +41,24 @@ export declare class Degree {
     static fromValue(value: any): Degree;
     toString(): string;
 }
+export declare class Dynamic {
+    symbol: string;
+    static size: number;
+    private static _values;
+    static PIANISSISSIMO: Dynamic;
+    static PIANISSIMO: Dynamic;
+    static PIANO: Dynamic;
+    static MEZZO_PIANO: Dynamic;
+    static MEZZO_FORTE: Dynamic;
+    static FORTE: Dynamic;
+    static FORTISSIMO: Dynamic;
+    static FORTISSISSIMO: Dynamic;
+    constructor(symbol: string);
+    crescendo(): Dynamic;
+    diminuendo(): Dynamic;
+    ordinal(): number;
+    toString(): string;
+}
 export declare class Inversion {
     value: number;
     static ROOT: Inversion;
