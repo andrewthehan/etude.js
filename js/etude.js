@@ -1077,3 +1077,15 @@ class KeySignature {
 KeySignature.ORDER_OF_FLATS = "BEADGCF".split("").map(Letter.fromChar);
 KeySignature.ORDER_OF_SHARPS = "FCGDAEB".split("").map(Letter.fromChar);
 exports.KeySignature = KeySignature;
+class TimeSignature {
+    constructor(beatsPerMeasure, oneBeat) {
+        this.beatsPerMeasure = beatsPerMeasure;
+        this.oneBeat = oneBeat;
+        if (typeof oneBeat === "number") {
+            this.oneBeat = Value.fromDuration(1.0 / oneBeat);
+        }
+        this.durationOfMeasure = beatsPerMeasure * this.oneBeat.duration;
+    }
+}
+TimeSignature.COMMON_TIME = new TimeSignature(4, Value.QUARTER);
+exports.TimeSignature = TimeSignature;

@@ -37,7 +37,7 @@ If you do not wish to use npmcdn, use [Browserify](http://browserify.org/) along
 ```
 Any of the above methods adds `etude` to the global namespace (e.g. `etude.Letter`). To avoid prepending `etude` to each module name with each use, add this line:
 ```javascript
-const {Accidental, Chord, Degree, Dynamic, Interval, Inversion, Key, KeySignature, Letter, Mode, MusicConstants, Note, Pitch, Scale, Value} = etude;
+const {Accidental, Chord, Degree, Dynamic, Interval, Inversion, Key, KeySignature, Letter, Mode, MusicConstants, Note, Pitch, Scale, TimeSignature, Value} = etude;
 ```
 
 ### require
@@ -54,7 +54,7 @@ This method requires you to prepend each module with `etude` (e.g. `etude.Letter
 
 #### Each module separately:
 ```javascript
-const {Accidental, Chord, Degree, Dynamic, Interval, Inversion, Key, KeySignature, Letter, Mode, MusicConstants, Note, Pitch, Scale, Value} = require("etude");
+const {Accidental, Chord, Degree, Dynamic, Interval, Inversion, Key, KeySignature, Letter, Mode, MusicConstants, Note, Pitch, Scale, TimeSignature, Value} = require("etude");
 ```
 This method allows you to omit modules (i.e. `const {Letter} = require("etude");`).
 
@@ -193,4 +193,12 @@ console.log(note.toString()); // C4(48)[0.25]
 
 let noteFromString = Note.fromString("F4[1/4]");
 console.log(noteFromString.toString()); // F4(53)[0.25]
+```
+
+#### TimeSignature
+```javascript
+let timeSignature = new TimeSignature(4, 4); // === new TimeSignature(4, Value.QUARTER) === TimeSignature.COMMON_TIME;
+console.log(timeSignature.beatsPerMeasure === 4); // true
+console.log(timeSignature.oneBeat === Value.QUARTER); // true
+console.log(timeSignature.durationOfMeasure); // 1
 ```

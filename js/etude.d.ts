@@ -290,3 +290,10 @@ export declare class KeySignature {
     static fromAccidentals(accidental: Accidental, count: number, mode: Mode): KeySignature;
     toString(): string;
 }
+export declare class TimeSignature {
+    beatsPerMeasure: number;
+    oneBeat: number | Value;
+    static COMMON_TIME: TimeSignature;
+    durationOfMeasure: number;
+    constructor(beatsPerMeasure: number, oneBeat: number | Value);
+}

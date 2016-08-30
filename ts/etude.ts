@@ -1219,3 +1219,17 @@ export class KeySignature {
 		return this.key.toString() + this.mode.toString();
 	}
 }
+
+export class TimeSignature {
+	static COMMON_TIME = new TimeSignature(4, Value.QUARTER);
+
+	durationOfMeasure: number;
+
+	constructor(public beatsPerMeasure: number, public oneBeat: number | Value) {
+		if (typeof oneBeat === "number") {
+			this.oneBeat = Value.fromDuration(1.0 / (oneBeat as number));
+		}
+
+		this.durationOfMeasure = beatsPerMeasure * (this.oneBeat as Value).duration;
+	}
+}
