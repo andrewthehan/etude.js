@@ -1,5 +1,7 @@
-# etude.js [![npm version](https://badge.fury.io/js/etude.svg)](https://badge.fury.io/js/etude)
-JavaScript Music Theory API
+# etude.js
+[![npm](https://img.shields.io/npm/v/etude.svg?maxAge=2592000)](https://www.npmjs.com/package/etude)
+
+> JavaScript Music Theory API
 
 Try it [here](https://tonicdev.com/npm/etude)!
 
