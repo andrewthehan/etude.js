@@ -25,15 +25,15 @@ A port of [etude](https://github.com/andrewthehan/etude), the Java version. Whil
 ### Browser
 Add this line to your html file:
 ```html
-<script type="text/javascript" src="https://npmcdn.com/etude/js/etude-browser.js"></script>
+<script type="text/javascript" src="https://unpkg.com/etude/js/etude-browser.js"></script>
 ```
 The `src` pulls from the latest version of etude on npm. This may cause builds to break if a backward-incompatible version is released. To target a specific version, include the version number in the `src`:
 ```html
-<script type="text/javascript" src="https://npmcdn.com/etude@version/js/etude-browser.js"></script>
+<script type="text/javascript" src="https://unpkg.com/etude@version/js/etude-browser.js"></script>
 ```
-More information on the version tag can be found at [npmcdn](https://npmcdn.com/).
+More information on the version tag can be found at [unpkg](https://unpkg.com/).
 
-If you do not wish to use npmcdn, use [Browserify](http://browserify.org/) along with the require methods below. If you do not wish to use either, download the [file](https://raw.githubusercontent.com/andrewthehan/etude.js/master/js/etude-browser.js) and add this line to your html file:
+If you do not wish to use unpkg, use [Browserify](http://browserify.org/) along with the require methods below. If you do not wish to use either, download the [file](https://raw.githubusercontent.com/andrewthehan/etude.js/master/js/etude-browser.js) and add this line to your html file:
 ```html
 <script type="text/javascript" src="path/to/file/etude-browser.js"></script>
 ```
