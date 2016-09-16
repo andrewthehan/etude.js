@@ -1,6 +1,6 @@
 {
   "name": "etude",
-  "version": "1.6.1",
+  "version": "2.1.0",
   "description": "JavaScript Music Theory API",
   "main": "js/etude.js",
   "typings": "js/etude",
@@ -23,7 +23,8 @@
     "typescript"
   ],
   "files": [
-    "js/"
+    "js/",
+    "ts/"
   ],
   "author": "Andrew Han",
   "license": "MIT",
@@ -34,5 +35,5 @@
   "engines": {
     "node": ">=6"
   },
-  "tonicExample": "const {Accidental, Chord, Degree, Dynamic, Interval, Inversion, Key, KeySignature, Letter, Mode, MusicConstants, Note, Pitch, Scale, TimeSignature, Value} = require(\"etude\");"
+  "tonicExample": "const {Accidental, Chord, Degree, Direction, Dynamic, Interval, Inversion, Key, KeySignature, Letter, Mode, MusicConstants, Note, Pitch, Policy, Scale, Tempo, TimeSignature, Value} = require(\"etude\").theory;"
 }
